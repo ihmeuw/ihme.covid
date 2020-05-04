@@ -9,4 +9,6 @@ Authors@R:
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: Shared functions for IHME COVID-19 work.
 Encoding: UTF-8
+Imports:
+    rprojroot
 LazyData: true
