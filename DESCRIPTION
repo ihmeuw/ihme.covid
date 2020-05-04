@@ -1,13 +1,12 @@
 Package: ihme.covid
 Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Mike",
+           family = "Richards",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "miker985@uw.edu",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: What license it uses
+Description: Shared functions for IHME COVID-19 work.
 Encoding: UTF-8
 LazyData: true
