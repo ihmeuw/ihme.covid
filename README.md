@@ -41,6 +41,24 @@ age_bins: 5
 outfile: /path/to/output.csv
 ```
 
+* `get_output_dir`
+
+Wraps common logic associated with getting the next output directory.
+
+Normal use will be to provide a `root` where data is saved and a date which is probably `"today"` but can be ANY `YYYY_MM_DD` date you wish.
+
+```
+# returns the next release for *today*
+get_output_dir(
+  root = "/ihme/covid-19/temperature"
+  date = "today")
+
+# returns the next release for 2020_05_01
+get_output_dir(
+  root = "/ihme/covid-19/temperature"
+  date = "2020_05_01")
+```
+
 * `get_latest_output_date_index`
 
 From `hospitalization_sim_functions.r`
