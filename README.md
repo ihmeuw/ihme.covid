@@ -7,6 +7,13 @@ tmpinstall <- system("mktemp -d", intern = TRUE)
 devtools::install_github("ihmeuw/ihme.covid", upgrade = "never")
 ```
 
+# Usage
+
+By default all functions are exported. That means you have two options
+
+1. Namespace everything e.g., `ihme.covid::get_latest_output_date_index("/ihme/covid-19/snapshot-data", "2020_05_02")`
+1. Use `library(ihme.covid)` and then call the function normally e.g., `get_latest_output_date_index("/ihme/covid-19/snapshot-data", "2020_05_02")`
+
 # Functions to use
 
 * `ihme.covid::get_script_dir()`
