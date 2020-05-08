@@ -2,7 +2,7 @@
 
 For now just install to a temporary directory. This should always work.
 ```
-tmpinstall <- system("mktemp -d", intern = TRUE)
+tmpinstall <- system("mktemp -d --tmpdir=/tmp", intern = TRUE)
 .libPaths(c(tmpinstall, .libPaths()))
 devtools::install_github("ihmeuw/ihme.covid", upgrade = "never")
 ```
