@@ -16,7 +16,7 @@ By default all functions are exported. That means you have two options
 
 # Functions to use
 
-* `ihme.covid::get_script_dir()`
+## `ihme.covid::get_script_dir()`
 
 Returns the directory your R script is in or NULL (if it fails).
 
@@ -27,7 +27,7 @@ this_dir <- ihme.covid::get_script_dir()
 source(file.path(this_dir, "my_functions.R"))
 ```
 
-* `print_debug`
+## `print_debug`
 
 Convenience function for printing values in the namespace.
 
@@ -48,7 +48,7 @@ age_bins: 5
 outfile: /path/to/output.csv
 ```
 
-* `get_output_dir`
+## `get_output_dir`
 
 Wraps common logic associated with getting the next output directory.
 
@@ -66,7 +66,7 @@ get_output_dir(
   date = "2020_05_01")
 ```
 
-* `get_latest_output_date_index`
+## `get_latest_output_date_index`
 
 From `hospitalization_sim_functions.r`
 
