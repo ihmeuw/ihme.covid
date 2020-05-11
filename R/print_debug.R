@@ -18,7 +18,7 @@ print_debug <- function(...) {
   for (symbol in symbols) {
     name <- as.character(symbol)
     val <- parent.env[[name]]
-    # special logic for handling NULL
+    # special logic for handling non-scalar values
     if (is.null(val)) {
       if (name %in% names(parent.env)) {
         # cast to string or the sprintf will fail
@@ -26,6 +26,12 @@ print_debug <- function(...) {
       } else {
         # provide helpful debug without breaking the program
         val <- sprintf("ERROR - no %s defined", name)
+      }
+    } else if (length(val) > 1) {
+      if (is.character(val)) {
+        val <- sprintf("c('%s')", paste(val, collapse = "', '"))
+      } else {
+        val <- sprintf("c(%s)", toString(val))
       }
     }
     message(sprintf("%s: %s", name, val))
