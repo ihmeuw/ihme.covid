@@ -18,3 +18,12 @@ test_that("Typos, NA, and NULL values are handled", {
   expect_message(print_debug(nu), "nu: NULL")
   expect_message(print_debug(baz), "baz: ERROR - no baz defined")
 })
+
+test_that("vector values are sensible", {
+  # use fixed = TRUE to do non-regex based comparisons
+  num.vals <- c(1, 4, 19)
+  expect_message(print_debug(num.vals), "num.vals: c(1, 4, 19)", fixed = TRUE)
+
+  char.vals <- c("foo", "bar", "baz")
+  expect_message(print_debug(char.vals), "char.vals: c('foo', 'bar', 'baz')", fixed = TRUE)
+})
