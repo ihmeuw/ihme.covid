@@ -76,3 +76,19 @@ ihme.covid::get_latest_output_date_index("/ihme/covid-19/snapshot-data", "2020_0
 # returns 0, as there are no releases on this date
 ihme.covid::get_latest_output_date_index("/ihme/covid-19/snapshot-data", "1999_09_09")
 ```
+
+## `sort_hierarchy`
+
+Sort your existing location hierarchy by name, respecting the hierarchy.
+
+In other words, "Italy" comes before "United States of America", and "Alabama" comes immediately after "United States of America" (because it's the first state alphabetically)
+
+This will also **prepend** an arbitrary list of locations (by `location_id`) if you like.
+
+```
+# REQUIRES the following columns: location_id, location_name, path_to_top_parent
+sorted <- ihme.covid::sort_hierarchy(dt)
+
+# Same requirements as above. This time, list "Spokane County" and "Italy" before anything else
+sorted <- ihme.covid::sort_hierarchy(dt, prepend = c(3539, 86))
+```
