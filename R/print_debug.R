@@ -12,21 +12,19 @@
 print_debug <- function(...) {
   # convert "..." to the symbols used (e.g., what was typed as the function args)
   symbols <- eval(substitute(alist(...)))
-  # grab the parent environment, which is where it is *assumed* this was called from
-  # note that nested calls will break this logic so e.g., capture.output(print_debug(foo)) does not work
-  parent.env <- parent.frame(n = 1)
   for (symbol in symbols) {
-    name <- as.character(symbol)
-    val <- parent.env[[name]]
+    name <- deparse(symbol)
+    val <- tryCatch(
+      # get actual value from the parent environment, which is where it is *assumed* this was called from
+      # note that nested calls will break this logic so e.g., capture.output(print_debug(foo)) does not work
+      eval(symbol, envir = parent.frame())
+      , error = function(e) {
+        sprintf("ERROR - no %s defined", name)
+      }
+    )
     # special logic for handling non-scalar values
     if (is.null(val)) {
-      if (name %in% names(parent.env)) {
-        # cast to string or the sprintf will fail
-        val <- "NULL"
-      } else {
-        # provide helpful debug without breaking the program
-        val <- sprintf("ERROR - no %s defined", name)
-      }
+      val <- "NULL"
     } else if (length(val) > 1) {
       if (is.character(val)) {
         val <- sprintf("c('%s')", paste(val, collapse = "', '"))

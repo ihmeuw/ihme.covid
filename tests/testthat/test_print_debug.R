@@ -27,3 +27,8 @@ test_that("vector values are sensible", {
   char.vals <- c("foo", "bar", "baz")
   expect_message(print_debug(char.vals), "char.vals: c('foo', 'bar', 'baz')", fixed = TRUE)
 })
+
+test_that("nested calls work", {
+  container <- list(ids = c(1, 2, 4))
+  expect_message(print_debug(container$ids), "container$ids: c(1, 2, 4)", fixed = TRUE)
+})
