@@ -92,3 +92,19 @@ sorted <- ihme.covid::sort_hierarchy(dt)
 # Same requirements as above. This time, list "Spokane County" and "Italy" before anything else
 sorted <- ihme.covid::sort_hierarchy(dt, prepend = c(3539, 86))
 ```
+
+## `error_on_missing_locations`
+
+Errors if your data is missing 1 or more values relative to the location hierarchy.
+
+Add a line like this to your code:
+```
+ihme.covid::error_on_missing_locations(shape@data$loc_id, hierarchy = hierarchy)
+```
+
+and get an error message if your data is missing locations in the hierarchy!
+
+```
+Error in ihme.covid::error_on_missing_locations(shape@data$loc_id, hierarchy = hierarchy) :
+  shape@data$loc_id missing values for location_id(s): 24,367,369,413,416
+```
