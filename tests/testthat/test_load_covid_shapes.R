@@ -11,6 +11,9 @@ test_that("load_covid_shapes behaves as expected on 2020-05-20", {
     regexp = NA
   )
 
+  # this is the normal GPS coordinates projection
+  expect_equal(sp::proj4string(world), "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
+
   expect_false(any(is.na(world$location_set_id)))
   expect_false(any(is.na(world$location_id)))
   expect_false(any(is.na(world$parent_id)))
