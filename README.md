@@ -108,3 +108,14 @@ and get an error message if your data is missing locations in the hierarchy!
 Error in ihme.covid::error_on_missing_locations(shape@data$loc_id, hierarchy = hierarchy) :
   shape@data$loc_id missing values for location_id(s): 24,367,369,413,416
 ```
+
+## `barber_smooth`
+
+Smooth a vector of positive numbers
+
+Add a line like this to your code:
+```
+ihme.covid::barber_smooth(vec = x, n_neighbors = 1, times = 1)
+```
+
+and get an error message if your vector has non-positive numbers
