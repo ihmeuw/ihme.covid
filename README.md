@@ -111,7 +111,7 @@ Error in ihme.covid::error_on_missing_locations(shape@data$loc_id, hierarchy = h
 
 ## `barber_smooth`
 
-Smooth a vector of positive numbers
+Smooth a vector of positive numbers. Returns a **`matrix`** of equal dimensions to the input vector.
 
 Add a line like this to your code:
 ```
