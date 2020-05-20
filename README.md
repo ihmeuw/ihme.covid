@@ -119,3 +119,14 @@ zwe <- world[world$location_id == 198, ]
 ```
 
 This is meant to be easier and less error-prone than remembering alternative column names as shapefiles are limited to 10 characters for each column name.
+
+## `barber_smooth`
+
+Smooth a vector of positive numbers. Returns a **`matrix`** of equal dimensions to the input vector.
+
+Add a line like this to your code:
+```
+ihme.covid::barber_smooth(vec = x, n_neighbors = 1, times = 1)
+```
+
+and get an error message if your vector has non-positive numbers
