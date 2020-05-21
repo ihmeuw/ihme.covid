@@ -109,6 +109,17 @@ Error in ihme.covid::error_on_missing_locations(shape@data$loc_id, hierarchy = h
   shape@data$loc_id missing values for location_id(s): 24,367,369,413,416
 ```
 
+## `load_covid_shapes`
+
+Loads the covid shapefile and normalizes column names to be consistent with `get_location_metadata()`s output
+
+```
+world <- ihme.covid::load_covid_shapes(location_set_id = lsid, location_set_version_id = lsvid)
+zwe <- world[world$location_id == 198, ]
+```
+
+This is meant to be easier and less error-prone than remembering alternative column names as shapefiles are limited to 10 characters for each column name.
+
 ## `barber_smooth`
 
 Smooth a vector of positive numbers. Returns a **`matrix`** of equal dimensions to the input vector.
