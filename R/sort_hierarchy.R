@@ -11,6 +11,8 @@ sort_hierarchy <- function(dt, prepend = NULL) {
   # unfortunately the directions provided for importing do not silence lint errors regarding ":="
   # so we just use #nolint
   # https://cran.r-project.org/web/packages/data.table/vignettes/datatable-importing.html
+  # silences R CMD check NOTEs
+  path_to_top_parent <- sort_lookup_foobarbz1922 <- NULL
 
   lookup <- as.vector(
     data.table::transpose(
