@@ -1,3 +1,10 @@
+#' Load COVID-19 shapes from standard model-inputs
+#'
+#' Load COVID-19 shapes and standardize column names to harmonize with standard location hierarchy names.
+#'
+#' @param location_set_id integer representing location_set_id of the hierarchy
+#' @param location_set_version_id integer representing location_set_version_id of the hierarchy
+#' @param shp_path path to shapefile to load. Used for testing. Default: NULL, which will use the shapefile of "best"
 load_covid_shapes <- function(location_set_id, location_set_version_id, shp_path = NULL) {
   if (is.null(shp_path)) {
     shp_path <- "/ihme/covid-19/model-inputs/best/unversioned-inputs/SHAPEFILES/covid.shp"
