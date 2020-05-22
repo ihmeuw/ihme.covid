@@ -1,7 +1,7 @@
 Package: ihme.covid
-Title: What the Package Does (One Line, Title Case)
+Title: Shared functions for IHME's covid-19 research
 Version: 0.0.1
-Authors@R: 
+Authors@R:
     person(given = "Mike",
            family = "Richards",
            role = c("aut", "cre"),
@@ -10,5 +10,9 @@ Authors@R:
 Description: Shared functions for IHME COVID-19 work.
 Encoding: UTF-8
 Imports:
+    data.table,
+    rgdal,
     rprojroot
 LazyData: true
+License: BSD
+RoxygenNote: 7.0.2
