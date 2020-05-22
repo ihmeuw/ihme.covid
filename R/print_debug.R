@@ -3,6 +3,8 @@
 #' Provide any number of arguments which are the variables you want printed
 #' Note that this function must be called directly and not wrapped in e.g., capture.output
 #'
+#' @param ... variables to debug. Provide by name.
+#'
 #' @examples
 #' \dontrun{
 #' foo <- 7
