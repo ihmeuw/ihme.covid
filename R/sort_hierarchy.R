@@ -1,3 +1,11 @@
+#' Sort data.table hierarchy for easier use of downstream outputs
+#'
+#' Sorts the hierarchy by location hierarchy so that children follow parents and everything is alphabetical.
+#' In addition, arbitrary locations can be moved to the front for easy lookup in e.g., output PDFs.
+#'
+#' @param dt data.table instance. MUST have the following columns: location_id, path_to_top_parent
+#' @param prepend numeric vector of location_id values to prepend to the document. If provided, these values
+#'        will be moved to the beginning of the result in the order provided and all other values will be sorted.
 sort_hierarchy <- function(dt, prepend = NULL) {
   # this function uses data.table to do some heavy lifting
   # unfortunately the directions provided for importing do not silence lint errors regarding ":="
