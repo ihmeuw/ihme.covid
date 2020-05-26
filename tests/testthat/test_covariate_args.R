@@ -26,8 +26,10 @@ get.call.for.flag <- function(args_kwargs, flag) {
 }
 
 test_that("covariate_args adds all expected arguments", {
-  parser <- list(add_argument = mockery::mock())
+  # setup - define ihme.covid.locations.covariate which is normally done in package load using .onAttach
+  options("ihme.covid.locations.covariate" = list(location_set_id = 111, location_set_version_id = 680))
 
+  parser <- list(add_argument = mockery::mock())
   covariate_args(parser)
 
   args_kwargs <- mock.args.kwargs(parser$add_argument)
@@ -38,7 +40,7 @@ test_that("covariate_args adds all expected arguments", {
 
   lsvid <- get.call.for.flag(args_kwargs, "--lsvid")
   expect_equal(lsvid$kwargs$type, "integer")
-  expect_true(lsvid$kwargs$required)
+  expect_equal(lsvid$kwargs$default, 680)
 
   lsid <- get.call.for.flag(args_kwargs, "--lsid")
   expect_equal(lsid$kwargs$type, "integer")
