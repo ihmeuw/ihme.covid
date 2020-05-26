@@ -44,3 +44,15 @@ test_that("error_on_missing_locations provides name of value", {
     fixed = TRUE
   )
 })
+
+
+test_that("error_on_missing_locations errors on unexpected args", {
+  hierarchy <- data.table::data.table(location_id = 1:5)
+  my_data <- list(ids = c(1, 2, 6))
+
+  expect_error(
+    error_on_missing_locations(my_data$ids, 4, hierarchy = hierarchy),
+    "Invalid extra arguments - provide only one positional arg (data) + hierarchy + optional hierarchy.value",
+    fixed = TRUE
+  )
+})

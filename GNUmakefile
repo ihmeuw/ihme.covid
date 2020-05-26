@@ -25,6 +25,9 @@ style:
 test:
 	@$(R_EXEC) -e "suppressMessages(suppressWarnings(devtools::test('.')))"
 
+test-package:
+	@$(R_EXEC) -e "devtools::document(); devtools::check()"
+
 
 .PHONY: make-R_LIBS_SITE
 make-R_LIBS_SITE:
