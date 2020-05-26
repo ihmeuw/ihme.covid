@@ -1,16 +1,16 @@
 # helper functions
 mock.args.kwargs <- function(mock) {
-  calls <- mockery::mock_calls(mock)
+  args <- mockery::mock_args(mock)
 
   call.args.kwargs <- function(call) {
     c <- as.list(call)
-    args <- c[which(names(c) == "")][-1] # omit first value, which is parser$add_argument
+    args <- c[which(names(c) == "")]
     kwargs <- c[which(names(c) != "")]
 
     list(args = args, kwargs = kwargs)
   }
 
-  lapply(calls, call.args.kwargs)
+  lapply(args, call.args.kwargs)
 }
 
 #' Returns call for specified flag.
