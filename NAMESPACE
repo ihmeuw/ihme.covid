@@ -1,2 +1,1 @@
-exportPattern("^[^\\.]")
 importFrom(data.table, ":=")
