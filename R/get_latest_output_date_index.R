@@ -12,7 +12,8 @@ get_latest_output_date_index <- function(dir, date) {
   currentfolders <- list.files(dir)
 
   # subset to date
-  date_dirs <- grep(date, currentfolders, value = T)
+  pat <- sprintf("^%s[.]\\d{2}$", date)
+  date_dirs <- grep(pat, currentfolders, value = T)
 
   if (length(date_dirs) == 0) {
     return(0)
