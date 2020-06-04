@@ -6,13 +6,13 @@
   # TODO: check for duplicates in case e.g., someone re-ran something because it crashed midway
   .input.files[[length(.input.files) + 1]] <- metadata
   # we need to re-assign this due to how the package value (which is not a global value) is managed by R
-  assignInNamespace(".input.files", .input.files, ns = "ihme.covid")
+  assignInNamespace(".input.files", .input.files, ns = packageName())
 }
 
 get.input.files <- function(clear = FALSE) {
   result <- .input.files
   if (clear) {
-    assignInNamespace(".input.files", list(), ns = "ihme.covid")
+    assignInNamespace(".input.files", list(), ns = packageName())
   }
   return(result)
 }
