@@ -24,3 +24,13 @@ test_that("get.input.files() result is not a shared reference", {
 
   expect_equal(get.input.files()[[1]]$path, "/dev/null")
 })
+
+
+test_that("get.metadata has expected keys", {
+  result <- get.metadata("/dev/null")
+
+  expect_setequal(
+    names(result),
+    c("path", "access_time", "last_modified")
+  )
+})

@@ -20,12 +20,12 @@ get.input.files <- function(clear = FALSE) {
 #' Returns metadata for a file
 get.metadata <- function(path) {
   path <- normalizePath(path)
+  info <- file.info(path)
   list(
-    details = "coming soon",
+    access_time = Sys.time(), # "2020-06-04 07:51:54 PDT"
+    last_modified = info$mtime, # "2020-05-20 15:39:13 PDT"
     # TODO:
-    # timestamp (runtime)
-    # last modified
-    # owner?
+    # owner? info$uname exists but is NA because we're in a container
     # md5?
     path = path
     )
