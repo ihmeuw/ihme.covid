@@ -18,7 +18,7 @@ get.input.files <- function(clear = FALSE) {
 }
 
 #' Returns metadata for a file
-.get.metadata <- function(path) {
+get.metadata <- function(path) {
   list(
     details = "coming soon",
     # TODO:
@@ -33,7 +33,7 @@ get.input.files <- function(clear = FALSE) {
 # methods we hijack
 fread <- function(path, ...) {
   tryCatch({
-    md <- .get.metadata(path)
+    md <- get.metadata(path)
     md$call <- "fread"
     .append.input.file(md)
   },
@@ -47,7 +47,7 @@ fread <- function(path, ...) {
 
 read.csv <- function(path, ...) {
   tryCatch({
-    md <- .get.metadata(path)
+    md <- get.metadata(path)
     md$call <- "read.csv"
     .append.input.file(md)
   },
