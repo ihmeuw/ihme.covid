@@ -20,15 +20,50 @@ get.input.files <- function(clear = FALSE) {
 #' Returns metadata for a file
 get.metadata <- function(path) {
   path <- normalizePath(path)
+
   info <- file.info(path)
-  list(
+  result <- list(
     access_time = Sys.time(), # "2020-06-04 07:51:54 PDT"
     last_modified = info$mtime, # "2020-05-20 15:39:13 PDT"
     # TODO:
     # owner? info$uname exists but is NA because we're in a container
     # md5?
     path = path
-    )
+  )
+
+  # since we know there's only 1 input, unlist result. then get last element
+  ext <- utils::tail(
+    unlist(strsplit(path, ".", fixed = TRUE)),
+    1)
+
+  if (ext == "shp") {
+    result$extra <- .get.shp.metadata(path)
+  }
+
+  return(result)
+}
+
+#' Return extra metadata associated with .shp file
+#'
+#' A "shapefile" is actually a collection of files. At minimum .shp, .shpx, and .dbf
+#'
+#' In addition, there are at least 13 optional files that may be included.
+#'
+#' https://en.wikipedia.org/wiki/Shapefile#Overview
+.get.shp.metadata <- function(path) {
+  # NOTE: we're being lazy and just grabbing everything that has the same prefix.
+
+  # split on "."; unlist the result into a vector; take all but the last element, re-join with "."
+  base <- paste(head(unlist(strsplit(path, ".", fixed = TRUE)), n = -1), collapse = ".")
+  # list files in directory which start with the filename (without extension)
+  related <- list.files(dirname(base), full.names = TRUE, pattern = basename(base))
+
+  result <- list()
+  for (rel in related) {
+    info <- file.info(rel)
+    result[[basename(rel)]] <- info$mtime
+  }
+  return(result)
 }
 
 # methods we hijack
@@ -94,4 +129,17 @@ read.csv <- function(path, ...) {
     result <- utils::read.csv(path, ...)
   })
   return(result)
+}
+
+readShapePoly <- function(path, ...) {
+  tryCatch({
+    md <- get.metadata(path)
+    md$call <- "readShapePoly"
+    .append.input.file(md)
+  },
+  error = function(e) {
+    message(sprintf("Errored recording metdata for %s - YOU ARE LACKING PROVENANCE", path))
+  }, finally = {
+    return(maptools::readShapePoly(path, ...))
+  })
 }
