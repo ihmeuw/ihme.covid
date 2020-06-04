@@ -23,8 +23,8 @@ get.metadata <- function(path) {
 
   info <- file.info(path)
   result <- list(
-    access_time = Sys.time(), # "2020-06-04 07:51:54 PDT"
-    last_modified = info$mtime, # "2020-05-20 15:39:13 PDT"
+    access_time = .format.metadata.date(Sys.time()),
+    last_modified = .format.metadata.date(info$mtime),
     # TODO:
     # owner? info$uname exists but is NA because we're in a container
     # md5?
@@ -41,6 +41,10 @@ get.metadata <- function(path) {
   }
 
   return(result)
+}
+
+.format.metadata.date <- function(datelike) {
+  as.character(datelike) # TODO: other requests?
 }
 
 #' Return extra metadata associated with .shp file
@@ -61,7 +65,7 @@ get.metadata <- function(path) {
   result <- list()
   for (rel in related) {
     info <- file.info(rel)
-    result[[basename(rel)]] <- info$mtime
+    result[[basename(rel)]] <- .format.metadata.date(info$mtime)
   }
   return(result)
 }
