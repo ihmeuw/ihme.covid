@@ -19,6 +19,7 @@ get.input.files <- function(clear = FALSE) {
 
 #' Returns metadata for a file
 get.metadata <- function(path) {
+  path <- normalizePath(path)
   list(
     details = "coming soon",
     # TODO:
