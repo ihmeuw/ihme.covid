@@ -71,29 +71,6 @@ get.metadata <- function(path) {
 }
 
 # methods we hijack
-# TODO: this fails if library(ihme.covid) occurs *before* any method we spy on
-#       it also fails if something is otherwise attached *after* library(ihme.covid) (no known cases of this)
-#
-# The best solution would look something like this in ihme.covid's .onLoad() method
-# * identify each library/package/namespace we wish to spy on
-# * define a function to spy on the method(s) from that package after it is attached
-# * scan all loaded namespaces
-# * for each package we want to spy on:
-#   * if it is attached, call the appropriate spy function
-#   * if it is NOT attached, set an event to call the appropriate function during "attach"
-#
-# NOTE: doing this in .onLoad() means we will be doing this explicitly instead
-# of implicitly by simply being earlier on the search path. It also removes the
-# need to explicitly call library(ihme.covid). It would, however, still require
-# that some ihme.covid:: call occurred before any I/O happened. This is *maybe*
-# acceptable as we can set the covid-19 R template to call
-# ihme.covid::get_script_dir() or ihme.covid::get_output_dir() very early in
-# the code (which logically makes sense)
-#
-# NOTE: By my reading I believe *attach* is the only event we care about
-# because packages that are only loaded are not on the search path because
-# packages that are only loaded are not on the search path and thus can't be accessed via `fread` but instead only by `data.table::fread`
-#
 # NOTE: the fullest solution would be to actually take over the namespaces
 # using assignInNamespace. However this is a more complicated solution and may
 # introduce other issues, and probably is irrelevant as I don't think anyone
@@ -107,7 +84,53 @@ get.metadata <- function(path) {
 #
 # assigning to other package namespaces
 # https://stackoverflow.com/a/58238931
-fread <- function(path, ...) {
+.spy.on.methods <- function() {
+  attached.packages <- .packages()
+
+  pkg.watch <- list(
+    "data.table" = "fread",
+    "maptools" = "readShapePoly",
+    "utils" = "read.csv"
+  )
+
+  for (pkg in names(pkg.watch)) {
+    methods <- pkg.watch[[pkg]]
+
+    if (pkg %in% attached.packages) {
+      # replace now
+      .replace.methods.with.spy(methods)
+    } else {
+      # replace them right after they're loaded
+      setHook(
+        packageEvent(pkg, "attach"),
+        # parameters included for reader comprehension - we don't need or use them
+        function(pkg.name, pkg.path) {
+          # WARNING: you cannot use `methods` here. The reason is the value is
+          # mutated within this loop and R's lazy evaluation means that ALL
+          # hook functions will end up having a `methods` value from the final
+          # iteration of the loop
+          .replace.methods.with.spy(pkg.watch[[pkg.name]])
+        },
+        action = "append"
+      )
+    }
+  }
+}
+
+#' Replace methods in global namespace with the spying methods defined below
+.replace.methods.with.spy <- function(methods) {
+  # NOTE: google searches reveal that questions and answers are sadly conflating some terms
+  # as.environment("package:PKGNAME") returns a namespace of exported values
+  # getNamespace("PKGNAME") returns a namespace of all package contents
+  this.ns <- getNamespace(packageName())
+  for (method in methods) {
+    spy.method <- get(sprintf(".spy.on.%s", method), env = this.ns)
+    assign(method, spy.method, envir = globalenv())
+  }
+}
+
+
+.spy.on.fread <- function(path, ...) {
   tryCatch({
     md <- get.metadata(path)
     md$call <- "fread"
@@ -121,7 +144,7 @@ fread <- function(path, ...) {
   return(result)
 }
 
-read.csv <- function(path, ...) {
+.spy.on.read.csv <- function(path, ...) {
   tryCatch({
     md <- get.metadata(path)
     md$call <- "read.csv"
@@ -135,7 +158,7 @@ read.csv <- function(path, ...) {
   return(result)
 }
 
-readShapePoly <- function(path, ...) {
+.spy.on.readShapePoly <- function(path, ...) {
   tryCatch({
     md <- get.metadata(path)
     md$call <- "readShapePoly"

@@ -17,6 +17,9 @@
   # now, reflect default values that are necessary for the application to work
   reflect_defaults()
 
+  # enable smart wrapping of functions to spy that does not require attaching ihme.covid
+  .spy.on.methods()
+
   # this makes the return value not auto-REPR in R
   invisible()
 }

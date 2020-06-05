@@ -2,13 +2,46 @@
   ihme.covid::get.input.files(clear = TRUE)
 }
 
-test_that("fread captured", {
+test_that("read.csv captured", {
+  # NOTE: read.csv is part of the utils package, which is automatically loaded
+  # on R startup. This will always be present in the environment, and
+  # ihme.covid will always immediately replace it
+
   # cleanup code
   on.exit(.reset.input.files(), add = TRUE)
 
   # precondition
   expect_equal(length(get.input.files()), 0)
 
+  suppressWarnings(read.csv("fixtures/data.csv"))
+  i.f <- get.input.files()
+  expect_equal(length(i.f), 1)
+  expect_equal(i.f[[1]]$path, normalizePath("fixtures/data.csv"))
+})
+
+
+test_that("fread replaced as expected when data.table is loaded after ihme.covid", {
+  expect_false(exists("fread"))
+
+  library(data.table)
+  on.exit(detach("package:data.table", unload = TRUE), add = TRUE)
+
+  expect_true(exists("fread"))
+
+  fread.env.name <- environmentName(environment(fread))
+  expect_equal(fread.env.name, "ihme.covid")
+})
+
+
+test_that("fread captured", {
+  # cleanup code
+  on.exit(.reset.input.files(), add = TRUE)
+  on.exit(detach("package:data.table", unload = TRUE), add = TRUE)
+
+  # precondition
+  expect_equal(length(get.input.files()), 0)
+
+  library(data.table)
   suppressWarnings(fread("/dev/null"))
   i.f <- get.input.files()
   expect_equal(length(i.f), 1)
@@ -17,12 +50,12 @@ test_that("fread captured", {
 
 
 test_that("get.input.files() result is not a shared reference", {
-  suppressWarnings(fread("/dev/null"))
+  suppressWarnings(read.csv("fixtures/data.csv"))
 
   i.f <- get.input.files()
   i.f[[1]]$path <- "hello"
 
-  expect_equal(get.input.files()[[1]]$path, "/dev/null")
+  expect_equal(get.input.files()[[1]]$path, normalizePath("fixtures/data.csv"))
 })
 
 
