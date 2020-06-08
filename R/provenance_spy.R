@@ -130,16 +130,21 @@ get.metadata <- function(path) {
 }
 
 
-.spy.on.fread <- function(path, ...) {
+.spy.on.fread <- function(input, ...) {
+  # fread has complex arguments. Punt on callers not using the standard first argument "input"
+  if (missing("input")) {
+    return(data.table::fread(...))
+  }
+
   tryCatch({
-    md <- get.metadata(path)
+    md <- get.metadata(input)
     md$call <- "fread"
     .append.input.file(md)
   },
   error = function(e) {
-    message(sprintf("Errored recording metdata for %s - YOU ARE LACKING PROVENANCE", path))
+    message(sprintf("Errored recording metdata for %s - YOU ARE LACKING PROVENANCE", input))
   }, finally = {
-    result <- data.table::fread(path, ...)
+    result <- data.table::fread(input, ...)
   })
   return(result)
 }
