@@ -149,29 +149,29 @@ get.metadata <- function(path) {
   return(result)
 }
 
-.spy.on.read.csv <- function(path, ...) {
+.spy.on.read.csv <- function(file, ...) {
   tryCatch({
-    md <- get.metadata(path)
+    md <- get.metadata(file)
     md$call <- "read.csv"
     .append.input.file(md)
   },
   error = function(e) {
-    message(sprintf("Errored recording metdata for %s - YOU ARE LACKING PROVENANCE", path))
+    message(sprintf("Errored recording metdata for %s - YOU ARE LACKING PROVENANCE", file))
   }, finally = {
-    result <- utils::read.csv(path, ...)
+    result <- utils::read.csv(file, ...)
   })
   return(result)
 }
 
-.spy.on.readShapePoly <- function(path, ...) {
+.spy.on.readShapePoly <- function(fn, ...) {
   tryCatch({
-    md <- get.metadata(path)
+    md <- get.metadata(fn)
     md$call <- "readShapePoly"
     .append.input.file(md)
   },
   error = function(e) {
-    message(sprintf("Errored recording metdata for %s - YOU ARE LACKING PROVENANCE", path))
+    message(sprintf("Errored recording metdata for %s - YOU ARE LACKING PROVENANCE", fn))
   }, finally = {
-    return(maptools::readShapePoly(path, ...))
+    return(maptools::readShapePoly(fn, ...))
   })
 }
