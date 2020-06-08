@@ -66,6 +66,16 @@ get_output_dir(
   date = "2020_05_01")
 ```
 
+## `get_latest_output_dir`
+
+Returns the latest output directory (by date/version) that currently exists
+
+```
+get_latest_output_dir(root = "/ihme/covid-19/temperature")
+```
+
+If no `YYYY_MM_DD.VV` directories exist this will error with an informative `stop()` message.
+
 ## `get_latest_output_date_index`
 
 From `hospitalization_sim_functions.r`
