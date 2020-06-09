@@ -5,7 +5,7 @@ For now just install to a temporary directory. This should always work.
 tmpinstall <- system("mktemp -d --tmpdir=/tmp", intern = TRUE)
 .libPaths(c(tmpinstall, .libPaths()))
 devtools::install_github("ihmeuw/ihme.covid", upgrade = "never")
-loadNamespace("ihme.covid")
+invisible(loadNamespace("ihme.covid"))
 ```
 
 # Usage
