@@ -62,10 +62,10 @@ load_covid_shapes <- function(location_set_id, location_set_version_id, shp_path
     }
   }
 
-  warn.on.type("location_set_id", "numeric")
-  warn.on.type("location_set_version_id", "numeric")
-  warn.on.type("location_id", "numeric")
-  warn.on.type("parent_id", "numeric")
+  warn.on.type("location_set_id", "integer")
+  warn.on.type("location_set_version_id", "integer")
+  warn.on.type("location_id", "integer")
+  warn.on.type("parent_id", "integer")
   warn.on.type("path_to_top_parent", "character")
   warn.on.type("level", "numeric")
   warn.on.type("location_ascii_name", "character")
