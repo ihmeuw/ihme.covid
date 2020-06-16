@@ -4,13 +4,13 @@
 #'
 #' @param location_set_id integer representing location_set_id of the hierarchy
 #' @param location_set_version_id integer representing location_set_version_id of the hierarchy
-#' @param shp_path path to shapefile to load. Used for testing. Default: NULL, which will use the shapefile of "best"
-load_covid_shapes <- function(location_set_id, location_set_version_id, shp_path = NULL) {
+#' @param version character version. Defaults to "best"
+#' @param shp_path path to shapefile to load. Used for testing and overwrites all other arguments.
+load_covid_shapes <- function(location_set_id, location_set_version_id, version = "best", shp_path = NULL) {
   if (is.null(shp_path)) {
-    shp_path <- "/ihme/covid-19/model-inputs/best/unversioned-inputs/SHAPEFILES/covid.shp"
+    shp_path <- sprintf("/ihme/covid-19/shapefiles/lsid_%i/lsvid_%i/%s/covid.shp", location_set_id, location_set_version_id, version)
   }
 
-  # TODO: get the shapefiles to a point that you can actually use these arguments to pick the correct one!
   world <-  rgdal::readOGR(shp_path, stringsAsFactors = FALSE)
 
   output.fields <- c(
@@ -62,10 +62,10 @@ load_covid_shapes <- function(location_set_id, location_set_version_id, shp_path
     }
   }
 
-  warn.on.type("location_set_id", "numeric")
-  warn.on.type("location_set_version_id", "numeric")
-  warn.on.type("location_id", "numeric")
-  warn.on.type("parent_id", "numeric")
+  warn.on.type("location_set_id", "integer")
+  warn.on.type("location_set_version_id", "integer")
+  warn.on.type("location_id", "integer")
+  warn.on.type("parent_id", "integer")
   warn.on.type("path_to_top_parent", "character")
   warn.on.type("level", "numeric")
   warn.on.type("location_ascii_name", "character")
