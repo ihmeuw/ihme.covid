@@ -1,0 +1,130 @@
+Error in fread("~/jobs.csv") : could not find function "fread"
+Execution halted
+Error in fread("~/jobs.csv") : could not find function "fread"
+Execution halted
+Error in fread("~/jobs.csv") : could not find function "fread"
+Execution halted
+Error in fread("~/jobs.csv") : could not find function "fread"
+Execution halted
+Error in fread("~/jobs.csv") : could not find function "fread"
+Execution halted
+Loading required package: data.table
+Loading required package: gglot2
+Error in ggplot(subset, aes(x = date, y = wmean)) : 
+  could not find function "ggplot"
+Calls: main
+In addition: Warning message:
+In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+  there is no package called ‘gglot2’
+Execution halted
+Loading required package: gglot2
+Error in ggplot(subset, aes(x = date, y = wmean)) : 
+  could not find function "ggplot"
+Calls: main
+In addition: Warning message:
+In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+  there is no package called ‘gglot2’
+Execution halted
+Error in ggplot(subset, aes(x = date, y = wmean)) : 
+  could not find function "ggplot"
+Calls: main
+In addition: Warning message:
+In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+  there is no package called ‘gglot2’
+Execution halted
+Loading required package: gglot2
+Error in ggplot(subset, aes(x = date, y = wmean)) : 
+  could not find function "ggplot"
+Calls: main
+In addition: Warning message:
+In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+  there is no package called ‘gglot2’
+Execution halted
+Loading required package: data.table
+Loading required package: ggplot2
+Error: You're passing a function as global data.
+Have you misspelled the `data` argument in `ggplot()`
+Execution halted
+Error: You're passing a function as global data.
+Have you misspelled the `data` argument in `ggplot()`
+Execution halted
+Error: You're passing a function as global data.
+Have you misspelled the `data` argument in `ggplot()`
+Execution halted
+Error: You're passing a function as global data.
+Have you misspelled the `data` argument in `ggplot()`
+Execution halted
+Error: You're passing a function as global data.
+Have you misspelled the `data` argument in `ggplot()`
+Execution halted
+Error: You're passing a function as global data.
+Have you misspelled the `data` argument in `ggplot()`
+Execution halted
+Error: You're passing a function as global data.
+Have you misspelled the `data` argument in `ggplot()`
+Execution halted
+Error: You're passing a function as global data.
+Have you misspelled the `data` argument in `ggplot()`
+Execution halted
+Error: You're passing a function as global data.
+Have you misspelled the `data` argument in `ggplot()`
+Execution halted
+Error: You're passing a function as global data.
+Have you misspelled the `data` argument in `ggplot()`
+Execution halted
+Loading required package: data.table
+Loading required package: ggplot2
+Error: `device` must be NULL, a string or a function.
+Execution halted
+Loading required package: ggplot2
+Error: `device` must be NULL, a strinLoading required package: ggplot2
+Error: `device` must be NULL, a string or a function.
+Execution halted
+ring or a function.
+Execution halted
+Error: `device` must be NULL, a string or a function.
+Execution halted
+Error: `device` must be NULL, a string or a function.
+Execution halted
+Loading required package: data.table
+Loading required package: ggplot2
+Saving 7 x 7 in image
+Loading required package: ggplot2
+Saving 7 x 7 in image
+Loading required package: data.table
+Loading required package: ggplot2
+Saving 7 x 7 in image
+Saving 7 x 7 in image
+Loading required package: data.table
+Loading required package: ggplot2
+Saving 7 x 7 in image
+Loading required package: data.table
+Loading required package: ggplot2
+Saving 7 x 7 in image
+Saving 7 x 7 in image
+ge: ggplot2
+Saving 7 x 7 in image
+Loading required package: data.table
+Loading required package: ggplot2
+Saving 7 x 7 in image
+Saving 7 x 7 in image
+Loading required package: data.table
+Loading required package: ggplot2
+Saving 7 x 7 in image
+Saving 7 x 7 in image
+Loading required package: data.table
+Loading required package: ggplot2
+Saving 7 x 7 in image
+Saving 7 x 7 in image
+Loading required package: data.table
+Loading required package: ggplot2
+Saving 7 x 7 in image
+Error in readRDS(pfile) : error reading from connection
+Calls: main ... loadNamespace -> find.package -> lapply -> FUN -> readRDS
+In addition: Warning message:
+In readRDS(pfile) : error reading the file
+Execution halted
+Loading required package: data.table
+Loading required package: ggplot2
+Saving 7 x 7 in image
+Saving 7 x 7 in image
