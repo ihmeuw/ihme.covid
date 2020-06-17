@@ -21,8 +21,6 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
                           fthread=5, fmem='10G', h_rt="00:02:00:00", queue="all.q",
                           project="proj_covid", job_name="pdf_array", output=NULL, errors=NULL, 
                           remove_temp_files=TRUE){
-  require(data.table) 
-  
   # Set up output/error logging
   user = Sys.info()[['user']]
   if (is.null(output)) output=paste0("/share/temp/sgeoutput/", user, "/output")
@@ -32,7 +30,7 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
   if (is.null(temp_out_dir)) temp_out_dir=paste0('/ihme/scratch/projects/covid/pdf_temp/', user)
   if (!dir.exists(temp_out_dir)) dir.create(temp_out_dir)
   
-  jobs = fread(jobs_file)
+  jobs = data.table::fread(jobs_file)
   command <- paste0(
     "qsub", 
     " -l fthread=", fthread, ",fmem=", fmem, ",h_rt=", h_rt, 

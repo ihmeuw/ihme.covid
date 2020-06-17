@@ -141,3 +141,15 @@ ihme.covid::barber_smooth(vec = x, n_neighbors = 1, times = 1)
 ```
 
 and get an error message if your vector has non-positive numbers
+
+## `pdf_array_job`
+
+Quickly make decks of PDFs through an array job on the cluster.  
+Documentation on how to format your code can be [found on this hub page.](https://hub.ihme.washington.edu/display/COV/How+to+run+an+array-job+of+PDFs)
+
+```
+pdf_array_job(jobs_file='~/jobs.csv',
+              r_script='~/repos/covid19/ihme.covid/templates/make_single_pdf_page.R',
+              final_out_dir='~/scratch',
+              write_file_name='temp_all_us_states.pdf')
+```

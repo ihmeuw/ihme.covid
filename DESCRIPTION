@@ -10,9 +10,12 @@ Authors@R:
 Description: Shared functions for IHME COVID-19 work.
 Encoding: UTF-8
 Imports:
+    grid, 
+    gridExtra,
     data.table,
+    png,
     rgdal,
-    rprojroot
+    rprojroot, 
 LazyData: true
 License: BSD
 RoxygenNote: 7.0.2
