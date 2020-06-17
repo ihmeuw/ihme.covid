@@ -36,5 +36,3 @@ pdf_array_job(jobs_file='~/jobs.csv',
               r_script='~/repos/covid19/ihme.covid/templates/make_single_pdf_page.R', 
               final_out_dir='~/scratch', 
               write_file_name='temp_all_us_states.pdf')
-
-

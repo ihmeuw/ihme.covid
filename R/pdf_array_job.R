@@ -14,6 +14,7 @@
 #' @param job_name Cluster job name. Defaults to 'pdf_array'. 
 #' @param output Path to write cluster output messages to. Defaults to "/share/temp/sgeoutput/USERNAME/output"
 #' @param errors Path to write cluster error messages to. Defaults to "/share/temp/sgeoutput/USERNAME/errors"
+#' @param remove_temp_files Remove temporary files after jobs have completed? Defaults to TRUE.
 pdf_array_job <- function(jobs_file, r_script, final_out_dir, 
                           temp_out_dir=NULL, write_file_name="all_jobs.pdf",
                           rshell="/share/singularity-images/lbd/shells/singR.sh -e s", 
@@ -73,19 +74,20 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
   system(command)
   
   if(remove_temp_files){
-    for (temp_dir in c(temp_out_dir, output, errors)){
+    temp_dirs = c(temp_out_dir, output, errors)
+    for (i in 1:length(temp_dirs){
       command <- paste0(
         "qsub",
         " -l fthread=2,fmem=10G,h_rt=00:00:45:00,archive=TRUE",
         " -q ", queue,
         " -P ", project,
-        " -N clean_temp_files",
+        " -N clean_temp_files_", i
         " -now no",
         " -hold_jid ", paste0("bind_", job_name),
         " -b yes", 
-        " rm ", temp_dir
+        " rm ", temp_dirs[i], "/*"
       )
-      print(temp_dir)
+      print(temp_dirs[i])
       print(command)
       system(command)
     }
