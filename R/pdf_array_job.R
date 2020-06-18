@@ -27,7 +27,7 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
   # Set up output/error logging
   if (is.null(output)) output=paste0("/share/temp/sgeoutput/", user, "/output")
   output = paste0(output, "/", uuid)
-  dir.create(output, recursive=TRUE)
+  if (!dir.exists(output)) dir.create(output, recursive=TRUE)
   if (is.null(errors)) errors=paste0("/share/temp/sgeoutput/", user, "/errors")
   errors = paste0(errors, "/", uuid)
   if (!dir.exists(errors)) dir.create(errors, recursive=TRUE)
@@ -51,7 +51,7 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
     " -o ", output, 
     " -e ", errors,
     " ", rshell, 
-    " ", r_script, 
+    " system.file('bind_pdf.R', package = 'ihme.covid')",
     " --jobs-file ", jobs_file, 
     " --temp-out-dir ", temp_out_dir
   )

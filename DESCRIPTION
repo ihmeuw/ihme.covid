@@ -7,6 +7,11 @@ Authors@R:
            role = c("aut", "cre"),
            email = "miker985@uw.edu",
            comment = c(ORCID = "YOUR-ORCID-ID"))
+    person(given = "Emily",
+           family = "Linebarger",
+           role = c("aut", "cre"),
+           email = "elineb@uw.edu",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: Shared functions for IHME COVID-19 work.
 Encoding: UTF-8
 Imports:
