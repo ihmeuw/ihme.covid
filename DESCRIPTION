@@ -15,7 +15,7 @@ Imports:
     data.table,
     png,
     rgdal,
-    rprojroot, 
+    rprojroot
 LazyData: true
 License: BSD
 RoxygenNote: 7.0.2
