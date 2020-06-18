@@ -30,7 +30,7 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
   dir.create(output, recursive=TRUE)
   if (is.null(errors)) errors=paste0("/share/temp/sgeoutput/", user, "/errors")
   errors = paste0(errors, "/", uuid)
-  dir.create(errors, recursive=TRUE)
+  if (!dir.exists(errors)) dir.create(errors, recursive=TRUE)
   
   # Make temp output directory
   temp_out_dir=paste0('/ihme/scratch/projects/covid/pdf_temp/', user, "/", uuid)
@@ -86,7 +86,7 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
   # so should be safe to delete.
   temp_file_dirs = c(temp_out_dir, errors, outputs)
   if(remove_temp_files){
-    for(dir in temp_file_dirs){
+    for(i in 1:length(temp_file_dirs)){
       command <- paste0(
         "qsub",
         " -l fthread=2,fmem=10G,h_rt=00:00:45:00,archive=TRUE",
