@@ -92,7 +92,7 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
         " -l fthread=2,fmem=10G,h_rt=00:00:45:00,archive=TRUE",
         " -q ", queue,
         " -P ", project,
-        " -N clean_temp_files_", i
+        " -N clean_temp_files_", i,
         " -now no",
         " -hold_jid ", bind_job_name,
         " -b yes", 
