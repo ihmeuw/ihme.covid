@@ -51,7 +51,7 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
     " -o ", output, 
     " -e ", errors,
     " ", rshell, 
-    " system.file('bind_pdf.R', package = 'ihme.covid')",
+    " ", r_script,
     " --jobs-file ", jobs_file, 
     " --temp-out-dir ", temp_out_dir
   )
@@ -72,7 +72,8 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
     " -cwd",
     " -o ", output, 
     " -e ", errors,
-    " ", rshell, " R/bind_pdf.r", 
+    " ", rshell, 
+    " system.file(\"bind_pdf.R\", package = \"ihme.covid\")", 
     " --temp-out-dir ", temp_out_dir, 
     " --final-out-dir ", final_out_dir, 
     " --write-file-name ", write_file_name
