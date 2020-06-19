@@ -85,7 +85,7 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
   # Remove temporary directories and their contents.
   # All have been created within this function with a UUID,
   # so should be safe to delete.
-  temp_file_dirs = c(temp_out_dir, errors, outputs)
+  temp_file_dirs = c(temp_out_dir, errors, output)
   if(remove_temp_files){
     for(i in 1:length(temp_file_dirs)){
       command <- paste0(
