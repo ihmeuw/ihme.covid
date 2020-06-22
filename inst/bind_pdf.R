@@ -3,8 +3,15 @@
 bind_pdfs = function(temp_out_dir, final_out_dir, write_file_name){
   files = list.files(temp_out_dir, full.names=T, include.dirs=F)
   
+  # Add zeros to job ID so they will sort in the order of jobs file 
+  files = gsub(paste0(temp_out_dir, "/"), "", files)
+  files = gsub(".png", "", files)
+  files[nchar(files)==1] = paste0("0", files[nchar(files)==1])
+  files = sort(files)
+  
   pdf(paste0(final_out_dir, "/", write_file_name))
   for (file in files){
+    file = paste0(temp_out_dir, "/", file, ".png")
     grob = grid::rasterGrob(png::readPNG(file, native = FALSE), interpolate = FALSE)
     gridExtra::grid.arrange(grob)
   } 
