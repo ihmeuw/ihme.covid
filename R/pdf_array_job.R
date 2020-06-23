@@ -61,7 +61,7 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
   
   # Once jobs have finished, bind them back together
   bind_job_name = paste0("bind_", job_name)
-  bind_script = '/home/j/temp/elineb/rlibs/ihme.covid/bind_pdf.R'
+  bind_script = system.file("bind_pdf.R", package="ihme.covid", lib.loc="/ihme/covid-19/.r-packages/current", mustWork=TRUE)
   command <- paste0(
     "qsub", 
     " -l fthread=", fthread, ",fmem=", fmem, ",h_rt=", h_rt, ",archive=TRUE",
