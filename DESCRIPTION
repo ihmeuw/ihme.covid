@@ -23,4 +23,4 @@ Imports:
     rprojroot
 LazyData: true
 License: BSD
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0

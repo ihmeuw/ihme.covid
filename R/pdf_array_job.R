@@ -61,6 +61,7 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
   
   # Once jobs have finished, bind them back together
   bind_job_name = paste0("bind_", job_name)
+  bind_script = system.file("bind_pdf.R", package="ihme.covid", lib.loc="/ihme/covid-19/.r-packages/current", mustWork=TRUE)
   command <- paste0(
     "qsub", 
     " -l fthread=", fthread, ",fmem=", fmem, ",h_rt=", h_rt, ",archive=TRUE",
@@ -69,11 +70,10 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
     " -N ", bind_job_name, 
     " -now no",
     " -hold_jid ", job_name,
-    " -cwd",
     " -o ", output, 
     " -e ", errors,
     " ", rshell, 
-    " system.file(\"bind_pdf.R\", package = \"ihme.covid\")", 
+    " ", bind_script, 
     " --temp-out-dir ", temp_out_dir, 
     " --final-out-dir ", final_out_dir, 
     " --write-file-name ", write_file_name
@@ -86,7 +86,7 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
   # All have been created within this function with a UUID,
   # so should be safe to delete.
   temp_file_dirs = c(temp_out_dir, errors, output)
-  if(remove_temp_files){
+  if(remove_temp_files==TRUE){
     for(i in 1:length(temp_file_dirs)){
       command <- paste0(
         "qsub",
@@ -97,7 +97,7 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
         " -now no",
         " -hold_jid ", bind_job_name,
         " -b yes", 
-        " rm -r ", dir[i]
+        " rm -r ", temp_file_dirs[i]
       )
       system(command)
     }
