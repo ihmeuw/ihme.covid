@@ -49,6 +49,22 @@ test_that("fread captured", {
 })
 
 
+test_that("read_excel captured", {
+  # cleanup code
+  on.exit(.reset.input.files(), add = TRUE)
+  on.exit(detach("package:readxl", unload = TRUE), add = TRUE)
+
+  # precondition
+  expect_equal(length(get.input.files()), 0)
+
+  library(readxl)
+  read_excel("fixtures/closure_criteria_sheet.xlsx")
+  i.f <- get.input.files()
+  expect_equal(length(i.f), 1)
+  expect_equal(i.f[[1]]$path, normalizePath("fixtures/closure_criteria_sheet.xlsx"))
+})
+
+
 test_that("get.input.files() result is not a shared reference", {
   suppressWarnings(read.csv("fixtures/data.csv"))
 

@@ -90,6 +90,7 @@ get.metadata <- function(path) {
   pkg.watch <- list(
     "data.table" = "fread",
     "maptools" = "readShapePoly",
+    "readxl" = "read_excel",
     "utils" = "read.csv"
   )
 
@@ -173,5 +174,18 @@ get.metadata <- function(path) {
     message(sprintf("Errored recording metdata for %s - YOU ARE LACKING PROVENANCE", fn))
   }, finally = {
     return(maptools::readShapePoly(fn, ...))
+  })
+}
+
+.spy.on.read_excel <- function(path, ...) {
+  tryCatch({
+    md <- get.metadata(path)
+    md$call <- "read_excel"
+    .append.input.file(md)
+  },
+  error = function(e) {
+    message(sprintf("Errored recording metadata for %s - YOU ARE LACKING PROVENANCE", path))
+  }, finally = {
+    return(readxl::read_excel(path, ...))
   })
 }
