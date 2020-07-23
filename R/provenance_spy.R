@@ -143,7 +143,7 @@ get.metadata <- function(path) {
     .append.input.file(md)
   },
   error = function(e) {
-    message(sprintf("Errored recording metdata for %s - YOU ARE LACKING PROVENANCE", input))
+    message(sprintf("Errored recording metadata for %s - YOU ARE LACKING PROVENANCE", input))
   }, finally = {
     result <- data.table::fread(input, ...)
   })
@@ -157,7 +157,7 @@ get.metadata <- function(path) {
     .append.input.file(md)
   },
   error = function(e) {
-    message(sprintf("Errored recording metdata for %s - YOU ARE LACKING PROVENANCE", file))
+    message(sprintf("Errored recording metadata for %s - YOU ARE LACKING PROVENANCE", file))
   }, finally = {
     result <- utils::read.csv(file, ...)
   })
@@ -171,7 +171,7 @@ get.metadata <- function(path) {
     .append.input.file(md)
   },
   error = function(e) {
-    message(sprintf("Errored recording metdata for %s - YOU ARE LACKING PROVENANCE", fn))
+    message(sprintf("Errored recording metadata for %s - YOU ARE LACKING PROVENANCE", fn))
   }, finally = {
     return(maptools::readShapePoly(fn, ...))
   })
