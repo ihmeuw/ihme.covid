@@ -14,12 +14,13 @@
 #' @param output Path to write cluster output messages to. Defaults to "/share/temp/sgeoutput/USERNAME/output"
 #' @param errors Path to write cluster error messages to. Defaults to "/share/temp/sgeoutput/USERNAME/errors"
 #' @param remove_temp_files Remove temporary files after jobs have completed? Defaults to TRUE.
+#' @param args Additional arguments to pass to array job launch script. 
 pdf_array_job <- function(jobs_file, r_script, final_out_dir, 
                           write_file_name="all_jobs.pdf",
                           rshell="/share/singularity-images/lbd/shells/singR.sh -e s", 
                           fthread=5, fmem='10G', h_rt="00:02:00:00", queue="all.q",
                           project="proj_covid", job_name="pdf_array", output=NULL, errors=NULL, 
-                          remove_temp_files=TRUE){
+                          remove_temp_files=TRUE, args=NULL){
   # Global variables 
   user = Sys.info()[['user']]
   uuid = uuid::UUIDgenerate()
@@ -55,6 +56,12 @@ pdf_array_job <- function(jobs_file, r_script, final_out_dir,
     " --jobs-file ", jobs_file, 
     " --temp-out-dir ", temp_out_dir
   )
+  if (!is.null(args)){
+    stopifnot(typeof(args)=='list')
+    for (arg in names(args)){
+      command = paste0(command, " --", arg, " ", args[[arg]])
+    }
+  }
   print("Running array jobs command:")
   print(command)
   system(command)
