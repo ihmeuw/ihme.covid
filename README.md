@@ -151,12 +151,12 @@ and get an error message if your vector has non-positive numbers
 
 Quickly make decks of PDFs through an array job on the cluster.  
 Documentation on how to format your code can be [found on this hub page.](https://hub.ihme.washington.edu/display/COV/How+to+run+an+array-job+of+PDFs)
-
 ```
 pdf_array_job(jobs_file='~/jobs.csv',
               r_script='~/repos/covid19/ihme.covid/templates/make_single_pdf_page.R',
               final_out_dir='~/scratch',
-              write_file_name='temp_all_us_states.pdf')
+              write_file_name='temp_all_us_states.pdf',
+              remove_temp_files=TRUE) # Turn remove_temp_files off to get helpful debugging logs
 ```
 
 # Maintenance 
