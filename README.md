@@ -1,6 +1,11 @@
 # Installation
 
-For now just install to a temporary directory. This should always work.
+Recommended usage is to source the centrally-installed package. 
+```
+library('ihme.covid', lib.loc='/ihme/covid-19/.r-packages/current')
+```
+
+Alternatively, you can do a fresh install to a temporary directory.
 ```
 tmpinstall <- system("mktemp -d --tmpdir=/tmp", intern = TRUE)
 .libPaths(c(tmpinstall, .libPaths()))
@@ -146,10 +151,29 @@ and get an error message if your vector has non-positive numbers
 
 Quickly make decks of PDFs through an array job on the cluster.  
 Documentation on how to format your code can be [found on this hub page.](https://hub.ihme.washington.edu/display/COV/How+to+run+an+array-job+of+PDFs)
-
 ```
 pdf_array_job(jobs_file='~/jobs.csv',
               r_script='~/repos/covid19/ihme.covid/templates/make_single_pdf_page.R',
               final_out_dir='~/scratch',
-              write_file_name='temp_all_us_states.pdf')
+              write_file_name='temp_all_us_states.pdf',
+              remove_temp_files=TRUE) # Turn remove_temp_files off to get helpful debugging logs
+```
+
+# Maintenance 
+To update the package in the central location, first make a new date-stamped, versioned directory in 
+```
+/ihme/covid-19/.r-packages
+```
+
+Then, use the following R code to create a new central package. Make sure you're on the most up-to-date SciComp R image. 
+```
+.libPaths(c("/ihme/covid-19/.r-packages/YOUR_VERSION", .libPaths()))
+devtools::install_github("ihmeuw/ihme.covid", upgrade = "never")
+```
+
+Finally, change the current pointer. 
+```
+cd /ihme/covid-19/.r-packages
+rm current
+ln -s YOUR_VERSION current
 ```
