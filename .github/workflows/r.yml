@@ -41,6 +41,9 @@ jobs:
           install.packages(c("remotes", "rcmdcheck"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
+      - name: Install ubuntu dependecies for rgdal
+        run: |
+          sudo apt install libgdal-dev
       - name: Package Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}
