@@ -17,8 +17,8 @@ Encoding: UTF-8
 Imports:
     grid, 
     gridExtra,
-    data.table,
     png,
+    readxl,
     rgdal,
     rprojroot
 LazyData: true
