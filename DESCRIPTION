@@ -15,6 +15,7 @@ Authors@R:
 Description: Shared functions for IHME COVID-19 work.
 Encoding: UTF-8
 Imports:
+    data.table,
     grid, 
     gridExtra,
     png,
