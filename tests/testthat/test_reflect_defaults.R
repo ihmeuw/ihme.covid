@@ -6,7 +6,8 @@ test_that("Default values are correctly reflected from filesystem + options", {
   )
   # re-set values at end of this function
   on.exit(options(old.options), add = TRUE)
-
+  
+  skip("Can't map to IHME filesystem using Github CI. Revisit.")
   reflect_defaults()
 
   expect_equal(getOption("ihme.covid.locations.covariate"), list(location_set_id = 111, location_set_version_id = 680))
