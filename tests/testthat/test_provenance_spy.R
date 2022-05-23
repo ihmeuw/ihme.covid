@@ -76,7 +76,7 @@ test_that("get.input.files() result is not a shared reference", {
 
 
 test_that("get.metadata has expected keys", {
-  result <- get.metadata("/dev/null")
+  result <- get.metadata(".")
 
   expect_setequal(
     names(result),

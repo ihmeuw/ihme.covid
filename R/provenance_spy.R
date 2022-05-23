@@ -20,7 +20,7 @@ get.input.files <- function(clear = FALSE) {
 #' Returns metadata for a file
 get.metadata <- function(path) {
   path <- normalizePath(path)
-
+  warning(sprintf("Path is %s", path))
   info <- file.info(path)
   result <- list(
     access_time = .format.metadata.date(Sys.time()),
