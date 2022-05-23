@@ -41,9 +41,9 @@ jobs:
           sudo apt install libgdal-dev
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "rcmdcheck", "devtools"))
+          install.packages(c("remotes", "devtools"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
       - name: Test 
-        run: rcmdcheck::rcmdcheck(devtools::test(), error_on = "error")
+        run: devtools::test('.', reporter = c('summary','fail'))
         shell: Rscript {0}
