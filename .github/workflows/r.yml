@@ -44,9 +44,6 @@ jobs:
           install.packages(c("remotes", "rcmdcheck", "devtools"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
-      - name: Package Check
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
-        shell: Rscript {0}
       - name: Test 
         run: rcmdcheck::rcmdcheck(devtools::test(), error_on = "error")
         shell: Rscript {0}
