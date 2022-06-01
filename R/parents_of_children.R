@@ -42,10 +42,10 @@ parent_of_child <- function(
     }
   }
   # Ideally, this never triggers, but if it does you at least have a good error message.
-  stop("Oops, something went wrong inside parents_of_children! Revisit inputs:
+  stop(sprintf("Oops, something went wrong inside parents_of_children! Revisit inputs:
        child_location_id %i \n
        hierarchy %s \n
-       parent_level %i", child_location_id, head(hierarchy), parent_level)
+       parent_level %i", child_location_id, head(hierarchy), parent_level))
 }
 
 #' @description Helper function to validate inputs to function
