@@ -159,6 +159,10 @@ pdf_array_job(jobs_file='~/jobs.csv',
               remove_temp_files=TRUE) # Turn remove_temp_files off to get helpful debugging logs
 ```
 
+## `parents_of_children`
+
+Given a vector of location IDs, returns the vector of their unique parent IDs at a given level. 
+
 # Maintenance 
 To update the package in the central location, first make a new date-stamped, versioned directory in 
 ```

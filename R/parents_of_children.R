@@ -1,6 +1,6 @@
 #' @title parents_of_children
 #' 
-#' @description Vectorized implementation of "parents_of_child"
+#' @description Given a vector of location IDs, returns the vector of their unique parent IDs at a given level.
 #' 
 #' @param child_loc_ids [int] Vector of location IDs to pull parent ID for
 #' @param hierarchy [data.table] Hierarchy. Must have columns location_id, path_to_top_parent, and level.
