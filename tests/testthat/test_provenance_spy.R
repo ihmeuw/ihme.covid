@@ -21,11 +21,7 @@ test_that("read.csv captured", {
 
 
 test_that("fread replaced as expected when data.table is loaded after ihme.covid", {
-  expect_false(exists("fread"))
-
-  library(data.table)
-  on.exit(detach("package:data.table", unload = TRUE), add = TRUE)
-                 
+  library(data.table)               
   expect_true(exists("fread"))
 
   fread.env.name <- environmentName(environment(fread))
