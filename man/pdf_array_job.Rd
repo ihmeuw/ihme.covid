@@ -9,16 +9,17 @@ pdf_array_job(
   r_script,
   final_out_dir,
   write_file_name = "all_jobs.pdf",
-  rshell = "/share/singularity-images/lbd/shells/singR.sh -e s",
+  rshell = "/ihme/singularity-images/rstudio/shells/execRscript.sh -s",
   fthread = 5,
   fmem = "10G",
-  h_rt = "00:02:00:00",
+  h_rt = "02:00:00",
   queue = "all.q",
   project = "proj_covid",
   job_name = "pdf_array",
   output = NULL,
   errors = NULL,
-  remove_temp_files = TRUE
+  remove_temp_files = TRUE,
+  args = NULL
 )
 }
 \arguments{
@@ -30,7 +31,7 @@ pdf_array_job(
 
 \item{write_file_name}{Final file name to write. Defaults to "all_jobs.pdf".}
 
-\item{rshell}{R-shell to use. Defaults to LBD shell.}
+\item{rshell}{R-shell to use. Defaults to SciComp shell.}
 
 \item{fthread}{fthreads for cluster jobs. Defaults to 5.}
 
@@ -44,11 +45,13 @@ pdf_array_job(
 
 \item{job_name}{Cluster job name. Defaults to 'pdf_array'.}
 
-\item{output}{Path to write cluster output messages to. Defaults to "/share/temp/sgeoutput/USERNAME/output"}
+\item{output}{Path to write cluster output messages to. Defaults to "/ihme/temp/slurmoutput/USERNAME/output"}
 
-\item{errors}{Path to write cluster error messages to. Defaults to "/share/temp/sgeoutput/USERNAME/errors"}
+\item{errors}{Path to write cluster error messages to. Defaults to "/ihme/temp/slurmoutput/USERNAME/errors"}
 
 \item{remove_temp_files}{Remove temporary files after jobs have completed? Defaults to TRUE.}
+
+\item{args}{Additional arguments to pass to array job launch script.}
 }
 \description{
 Submit an array job to plot PDFs, then bind back together.

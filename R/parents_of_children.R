@@ -1,4 +1,4 @@
-#' @name parents_of_children
+#' @title parents_of_children
 #' 
 #' @description Vectorized implementation of "parents_of_child"
 #' 
@@ -14,7 +14,7 @@ parents_of_children <- function(
   return(unique(sapply(child_loc_ids, function(x) parent_of_child(x, hierarchy, parent_level))))
 }
 
-#' @name parent_of_child
+#' @title parent_of_child
 #' 
 #' @description Given a location ID, returns its parent ID at a given level. 
 #' 
@@ -22,7 +22,6 @@ parents_of_children <- function(
 #' @param hierarchy [data.table] Hierarchy. Must have columns location_id, path_to_top_parent, and level.
 #' @param parent_level [int] Single level of the hierarchy - find all parent location_ids of child location_ids at this level
 #' 
-#' @export
 #' @return 
 parent_of_child <- function(
   child_location_id, 
