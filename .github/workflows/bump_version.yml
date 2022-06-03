@@ -7,7 +7,7 @@ on:
 
 jobs:
   bump-version:
-    name: 'Bump Version on main'
+    name: 'Bump package version'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,6 +22,9 @@ jobs:
         uses: r-lib/actions/setup-r@f57f1301a053485946083d7a45022b278929a78a
         with:
           r-version: ${{ matrix.r-version }}
+      - name: Install ubuntu dependecie
+        run: |
+          sudo apt install libcurl
       - name: Install dependencies
         run: |
           install.packages(c("usethis"))
