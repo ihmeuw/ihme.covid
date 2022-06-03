@@ -24,7 +24,7 @@ jobs:
           r-version: ${{ matrix.r-version }}
       - name: Install ubuntu dependecie
         run: |
-          sudo apt install libcurl
+          sudo apt install libcurl4-openssl-dev
       - name: Install dependencies
         run: |
           install.packages(c("usethis"))
