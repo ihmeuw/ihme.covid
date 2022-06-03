@@ -1,0 +1,31 @@
+name: 'Bump Version'
+
+on:
+  push:
+    branches:
+      - 'feature/elineb/CVD19-1149-add-cd'
+
+jobs:
+  bump-version:
+    name: 'Bump Version on main'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        r-version: ['4.1.1']
+
+    steps:
+      - name: 'Checkout source code'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+      - name: Set up R ${{ matrix.r-version }}
+        uses: r-lib/actions/setup-r@f57f1301a053485946083d7a45022b278929a78a
+        with:
+          r-version: ${{ matrix.r-version }}
+      - name: 'cat DESCRIPTION'
+        run: cat ./DESCRIPTION
+      - name: Version bump
+        run: usethis::use_version('minor')
+        shell: Rscript {0}
+      - name: 'cat DESCRIPTION'
+        run: cat ./DESCRIPTION
