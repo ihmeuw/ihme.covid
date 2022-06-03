@@ -3,7 +3,7 @@ name: 'Bump Version'
 on:
   push:
     branches:
-      - 'feature/elineb/CVD19-1149-add-cd'
+      - 'main'
 
 jobs:
   bump-version:
