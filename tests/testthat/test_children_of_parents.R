@@ -58,3 +58,11 @@ test_that("children_of_parents throws expected errors", {
     ), regexp = "Invalid output argument, please choose"
   )
 })
+
+# TODO: Add test that this works for n-length parent vector
+
+test_that("is_child_of_parent helper function works", {
+  expect_true(is_child_of_parent(102, test_hier[location_id==570, path_to_top_parent]))
+  
+  expect_false(is_child_of_parent(163, test_hier[location_id==570, path_to_top_parent]))
+})

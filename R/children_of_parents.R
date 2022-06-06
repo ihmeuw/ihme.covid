@@ -33,67 +33,45 @@ children_of_parents <- function(
   output = "boolean", # output_options <- c("boolean", "loc_ids")
   include_parent = FALSE # include parent with children, or only children?
 ){
+  validate_children_of_parents_inputs(output, hierachy)
   
+  result_vec = c()
+  for (i in 1:nrow(hierarchy)){
+    parent_check_results = c()
+    for (parent_id in parent_loc_ids){
+      # There is an off-by-one error here. 
+      # the current location ID is included in the path_to_top_parent,
+      # so to get behavior right for "include_parent", negate the check when location_id == parent_id.
+      if (include_parent){
+        check = is_child_of_parent(parent_id, hierarchy$path_to_top_parent[i]) 
+      } else {
+        check = is_child_of_parent(parent_id, hierarchy$path_to_top_parent[i]) & 
+          hierarchy$location_id[i] != parent_id
+      }
+      parent_check_results = c(parent_check_results, check)
+    }
+    result_vec = c(result_vec, any(parent_check_results))
+  }
+  
+  stopifnot(length(result_vec) == nrow(hierarchy))
+  
+  if (output == "loc_ids"){
+    return(hierarchy[result_vec, location_id])
+  }
+  return(result_vec) # Only other option is "boolean"
+  
+}
+
+validate_children_of_parents_inputs = function(output, hierarchy){
   # check for valid method
   output_options <- c("boolean", "loc_ids")
   if (!(output %in% output_options)) {
     stop("Invalid output argument, please choose:
          boolean, loc_ids")
   }
-  
-  
-  path_to_parent_string <- hierarchy$path_to_top_parent
-  
-  if (output == "boolean") {
-    
-    child_TF <- c()
-    
-    for(i in 1:length(path_to_parent_string)){
-      X <- as.numeric(unlist(strsplit(path_to_parent_string[i], ",")))
-      
-      if(include_parent){
-        child_TF[i] <- any(parent_loc_ids %in% X)
-        
-      } else if (!include_parent) {
-        if(any(parent_loc_ids == X[length(X)])) {
-          child_TF[i] <- FALSE
-          
-        } else {
-          child_TF[i] <- any(parent_loc_ids %in% X)
-          
-        }
-      }
-    }
-    
-    return_vec <- child_TF
-    
-  } else if (output == "loc_ids"){
-    
-    child_TF <- c()
-    
-    for(i in 1:length(path_to_parent_string)){
-      X <- as.numeric(unlist(strsplit(path_to_parent_string[i], ",")))
-      
-      if(include_parent){
-        child_TF[i] <- any(parent_loc_ids %in% X)
-        
-      } else if (!include_parent) {
-        if(any(parent_loc_ids == X[length(X)])) {
-          child_TF[i] <- FALSE
-          
-        } else {
-          child_TF[i] <- any(parent_loc_ids %in% X)
-          
-        }
-      }
-    }
-    
-    hierarchy$child_TF <- child_TF
-    return_vec <- hierarchy$location_id[which(child_TF)]
-    
-  }
-  
-  
-  return(return_vec)
-  
+}
+
+is_child_of_parent = function(parent_id, path_to_top_parent){
+  path_to_top_parent = as.integer(unlist(strsplit(path_to_top_parent, ",")))
+  return(parent_id %in% path_to_top_parent)
 }
