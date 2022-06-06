@@ -59,10 +59,33 @@ test_that("children_of_parents throws expected errors", {
   )
 })
 
-# TODO: Add test that this works for n-length parent vector
+test_that("You can pass an n-length vector of parent IDs", {
+  result = children_of_parents(
+    parent_loc_ids = c(102, 1),
+    hierarchy = test_hier, 
+    output = 'loc_ids',
+    include_parent = FALSE
+  )
+  expect_equal(result, c(570, 526, 102, 4868, 163))
+  
+  result = children_of_parents(
+    parent_loc_ids = c(102, 1),
+    hierarchy = test_hier, 
+    output = 'loc_ids',
+    include_parent = TRUE
+  )
+  expect_equal(result, c(570, 526, 102, 4868, 163, 1))
+  
+  result = children_of_parents(
+    parent_loc_ids = c(102, 163),
+    hierarchy = test_hier, 
+    output = 'loc_ids',
+    include_parent = FALSE
+  )
+  expect_equal(result, c(570, 526, 4868))
+})
 
 test_that("is_child_of_parent helper function works", {
   expect_true(is_child_of_parent(102, test_hier[location_id==570, path_to_top_parent]))
-  
   expect_false(is_child_of_parent(163, test_hier[location_id==570, path_to_top_parent]))
 })

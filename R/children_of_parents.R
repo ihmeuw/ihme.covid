@@ -56,12 +56,13 @@ children_of_parents <- function(
   stopifnot(length(result_vec) == nrow(hierarchy))
   
   if (output == "loc_ids"){
-    return(hierarchy[result_vec, location_id])
+    return(unique(hierarchy[result_vec, location_id]))
   }
   return(result_vec) # Only other option is "boolean"
   
 }
 
+#' @description Helper function for children_of_parents. 
 validate_children_of_parents_inputs = function(output, hierarchy){
   # check for valid method
   output_options <- c("boolean", "loc_ids")
@@ -71,6 +72,14 @@ validate_children_of_parents_inputs = function(output, hierarchy){
   }
 }
 
+#' @description Helper function for children_of_parents. 
+#' Given a single parent_id and a path_to_top_parent, 
+#' returns TRUE if that parent_id is in the path. 
+#' 
+#' @param parent_id [int] Location ID of parent to test
+#' @param path_to_top_parent [character] String of path to top parent from hierarchy
+#' 
+#' @return boolean
 is_child_of_parent = function(parent_id, path_to_top_parent){
   path_to_top_parent = as.integer(unlist(strsplit(path_to_top_parent, ",")))
   return(parent_id %in% path_to_top_parent)
