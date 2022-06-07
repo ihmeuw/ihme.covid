@@ -57,6 +57,17 @@ test_that("children_of_parents throws expected errors", {
       include_parent = FALSE
     ), regexp = "Invalid output argument, please choose"
   )
+  
+  bad_hier = data.table::copy(test_hier)
+  bad_hier$path_to_top_parent = NULL
+  expect_error(
+    children_of_parents(
+      parent_loc_ids = 102,
+      hierarchy = bad_hier, 
+      output = 'boolean',
+      include_parent = FALSE
+    ), regexp = "Was passed an invalid hierarchy. Must have columns path_to_top_parent and location_id."
+  )
 })
 
 test_that("You can pass an n-length vector of parent IDs", {

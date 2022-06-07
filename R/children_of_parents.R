@@ -33,7 +33,7 @@ children_of_parents <- function(
   output = "boolean", # output_options <- c("boolean", "loc_ids")
   include_parent = FALSE # include parent with children, or only children?
 ){
-  validate_children_of_parents_inputs(output, hierachy)
+  validate_children_of_parents_inputs(output, hierarchy)
   
   result_vec = c()
   for (i in 1:nrow(hierarchy)){
@@ -67,8 +67,12 @@ validate_children_of_parents_inputs = function(output, hierarchy){
   # check for valid method
   output_options <- c("boolean", "loc_ids")
   if (!(output %in% output_options)) {
-    stop("Invalid output argument, please choose:
-         boolean, loc_ids")
+    stop("Invalid output argument, please choose: boolean, loc_ids")
+  }
+  
+  # Check for valid hierarchy
+  if (!all(c('path_to_top_parent', 'location_id') %in% names(hierarchy))){
+    stop("Was passed an invalid hierarchy. Must have columns path_to_top_parent and location_id.")
   }
 }
 
