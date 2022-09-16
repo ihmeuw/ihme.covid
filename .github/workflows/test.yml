@@ -44,6 +44,6 @@ jobs:
           install.packages(c("remotes", "devtools"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
-      - name: Test 
+      - name: Test
         run: devtools::test('.', reporter = c('summary','fail'))
         shell: Rscript {0}
