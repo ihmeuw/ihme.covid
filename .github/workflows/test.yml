@@ -38,7 +38,7 @@ jobs:
           r-version: ${{ matrix.r-version }}
       - name: Install ubuntu dependecies for rgdal
         run: |
-          sudo apt install libgdal-dev libcurl4-gnutls-dev
+          sudo apt install libgdal-dev libcurl4-gnutls-dev libharfbuzz-dev  libfribidi-dev
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "devtools"))
