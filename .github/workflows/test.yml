@@ -43,7 +43,7 @@ jobs:
         run: |
           install.packages(c("remotes", "devtools"))
           remotes::install_deps(dependencies = TRUE)
-          utils::install.packages("textshaping", type = "binary")
+          utils::install.packages("textshaping")
         shell: Rscript {0}
       - name: Test
         run: devtools::test('.', reporter = c('summary','fail'))
