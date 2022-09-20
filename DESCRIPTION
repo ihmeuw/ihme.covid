@@ -1,6 +1,6 @@
 Package: ihme.covid
 Title: Shared functions for IHME's covid-19 research
-Version: 1.3.0
+Version: 1.4.0
 Authors@R:
     person(given = "Mike",
            family = "Richards",
