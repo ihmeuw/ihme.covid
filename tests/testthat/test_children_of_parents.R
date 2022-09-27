@@ -64,7 +64,7 @@ test_that("children_of_parents throws expected errors", {
       hierarchy = test_hier, 
       output = 'not an output',
       include_parent = FALSE
-    ), regexp = "Invalid parent_loc_ids type, please provide an integer vector of location_id's"
+    ), regexp = "Invalid parent_loc_ids type, please provide an numeric vector of location_id's"
   )
   
   bad_hier = data.table::copy(test_hier)
