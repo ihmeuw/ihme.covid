@@ -35,7 +35,7 @@ submit_job <- function(
     output_path = NULL,
     error_path = NULL,
     sbatch_args_list = NULL,
-    shell_path = NULL,
+    shell_path = "/ihme/singularity-images/rstudio/shells/jpy_rstudio_sbatch_script.sh",
     image_path = NULL,
     shell_args_list = NULL,
     script_args_list = NULL
@@ -50,10 +50,6 @@ submit_job <- function(
   
   if (is.null(output_path)) {
     output_path = file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")
-  }
-  
-  if (is.null(shell_path)) {
-    shell_path = "/ihme/singularity-images/rstudio/shells/execRscript.sh"
   }
   
   command <- paste0(
@@ -80,11 +76,7 @@ submit_job <- function(
   
   command <- paste0(
     command,
-    ifelse(
-      is.null(shell_path),
-      "/ihme/singularity-images/rstudio/shells/jpy_rstudio_sbatch_script.sh",
-      paste0(" ", shell_path)
-    ),
+    shell_path,
     ifelse(is.null(image_path), "", paste0(command, " -i ", image_path))
   )
   
