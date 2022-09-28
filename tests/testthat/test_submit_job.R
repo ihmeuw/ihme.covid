@@ -66,7 +66,53 @@ test_that(
   desc = "Command must be valid.",
   {
     # Arguments are grouped with the commands/scripts to which they belong.
+    script_path = script1
+    job_name = "test_job"
+    mem = "1G"
+    archive = T
+    cores = "2"
+    runtime = "1"
+    partition = "d.q"
+    account = "proj_covid"
+    output_path = "test_output_path"
+    error_path = output_path
+    sbatch_args_list = list("--test_sbatch_arg" = "test_sbatch_arg")
+    shell_path = "test_shell_path"
+    image_path = "test_image_path"
+    shell_args_list = list("--test_shell_arg" = "test_shell_arg")
+    script_args_list = list("--test_script_arg" = "test_script_arg")
     ## sbatch args follow sbatch and precede shell_path.
+    expect_message(
+      object = submit_job(
+        script_path = script_path,
+        job_name = job_name,
+        mem = mem,
+        archive = archive,
+        cores = cores,
+        runtime = runtime,
+        partition = partition,
+        account = account,
+        output_path = output_path,
+        error_path = output_path,
+        sbatch_args_list = sbatch_args_list,
+        shell_path = shell_path,
+        image_path = image_path,
+        shell_args_list = shell_args_list,
+        script_args_list = script_args_list,
+        see_command = T
+      ),
+      regexp = paste0(
+        "command: sbatch -J ", job_name, " --mem=", mem, " -C archive -c ", cores,
+        " -t ", runtime, " -p ", partition, " -A ", account,
+        " -o ", file.path(output_path, paste0(job_name, ".o%A_%a")), # TODO: could be less particular about the file type suffix.
+        " -e ", file.path(output_path, paste0(job_name, ".e%A_%a")),
+        " ", names(sbatch_args_list)[1], " ", sbatch_args_list[[names(sbatch_args_list)[1]]],
+        " ", shell_path, " -i ", image_path,
+        " ", names(shell_args_list)[1], " ", shell_args_list[[names(shell_args_list)[1]]],
+        " -s ", script_path,
+        " ", names(script_args_list)[1], " ", script_args_list[[names(script_args_list)[1]]]
+      )
+    )
     ## shell args follow shall_path and precede script_path.
     ## script args follow script_path.
     
