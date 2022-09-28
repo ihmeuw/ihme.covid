@@ -35,7 +35,6 @@ test_that(
     )
   }
 )
-## A valid test script must return a job id.
 
 # Inputs must be valid.
 ## script_path must be a string.
