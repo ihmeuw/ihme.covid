@@ -1,7 +1,7 @@
 # TODO: Find best way to document defaults.
 # TODO: How to explicitly allow multiple argument data types? Does R overload? How to document in Roxygen? (E.g., cores can be submitted as integer or character, and we can just convert to character when constructing command.)
 
-#' @description  Submit a job to Slurm.
+#' @description  Submit a job to Slurm. See `sbatch` documentation: https://slurm.schedmd.com/sbatch.html
 #'
 #' \code{submit_job()} Runs a script with sbatch, accepting standard sbatch arguments in addition to an optional list of arguments to pass to the script.
 #'
