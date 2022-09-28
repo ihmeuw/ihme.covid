@@ -18,6 +18,7 @@
 #' @param sbatch_args_list [list()] Optional named list of arguments to pass to `sbatch`, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' @param shell_path [character] Optional filepath to image shell script. If NULL, defaults to `/ihme/singularity-images/rstudio/shells/jpy_rstudio_sbatch_script.sh`.
 #' @param image_path [character] Optional filepath to image. Argument for `shell_path -i`.
+#' @param shell_args_list [list()] Optional named list of arguments to pass to the shell, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' @param script_args_list [list()] Optional named list of arguments to pass to the script, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' 
 #' @return [character] `submission_return`, the return message from submitting `sbatch` `command` to `system(command, intern = T)`.
@@ -36,6 +37,7 @@ submit_job <- function(
     sbatch_args_list = NULL,
     shell_path = NULL,
     image_path = NULL,
+    shell_args_list = NULL,
     script_args_list = NULL
 ) {
   
@@ -83,9 +85,15 @@ submit_job <- function(
       "/ihme/singularity-images/rstudio/shells/jpy_rstudio_sbatch_script.sh",
       paste0(" ", shell_path)
     ),
-    ifelse(is.null(image_path), "", paste0(command, " -i ", image_path)),
-    " -s ", script_path
+    ifelse(is.null(image_path), "", paste0(command, " -i ", image_path))
   )
+  
+  # Append extra arguments for shell script.
+  for (arg_name in names(shell_args_list)) {
+    command <- paste(command, arg_name, shell_args_list[arg_name])
+  }
+  
+  command = paste0(command, " -s ", script_path)
   
   # Append extra arguments for script.
   for (arg_name in names(script_args_list)) {
