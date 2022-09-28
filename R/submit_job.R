@@ -88,7 +88,7 @@ submit_job <- function(
   ## Set up shell script and image with flags.
   command <- paste0(
     command,
-    shell_path,
+    " ", shell_path,
     ifelse(is.null(image_path), "", paste0(command, " -i ", image_path))
   )
   for (arg_name in names(shell_args_list)) {
