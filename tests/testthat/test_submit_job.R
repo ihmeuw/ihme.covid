@@ -1,6 +1,27 @@
 
+# NOTE: Set your working directory to the repo.
+test_scripts_dir = "tests/testthat/fixtures/sbatch_scripts"
+return_regex = "Submitted batch job \\d{8}"
+
+# Must run with just a valid script path.
+script_path = file.path(test_scripts_dir, "test_script_1.R")
+test_that(
+  desc = "Must run with just a valid script path.",
+  {
+    result = submit_job(script_path = script_path)
+    expect(
+      ok = grepl(return_regex, result),
+      failure_message = paste0(
+        "Passing only script_path ", script_path,
+        " produced invalid submission return: ", result
+      )
+    )
+  }
+)
+
 # Return must be valid.
-## Return type must be (?).
+## Return type must be character.
+## Return must be "Submitted batch job <job id>".
 ## A valid test script must return a job id.
 
 # Inputs must be valid.
