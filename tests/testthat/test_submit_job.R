@@ -20,7 +20,6 @@ test_that(
 )
 
 # Return must be valid.
-## Return must be "Submitted batch job <job id>".
 test_that(
   desc = "Return must be 'Submitted batch job <job id>'.",
   {
@@ -36,7 +35,18 @@ test_that(
 )
 
 # Inputs must be valid.
-## script_path must be a string.
+## script_path must be valid.
+test_that(
+  desc = "script_path must be valid.",
+  {
+    # script_path must be a string.
+    script_path = 10
+    expect_error(
+      object = submit_job(script_path = script_path),
+      regexp = paste0("script_path must be a string. script_path: ", script_path)
+    )
+  }
+)
 ## script_path must be a non-empty string.
 ## script_path must be a valid filepath.
 
