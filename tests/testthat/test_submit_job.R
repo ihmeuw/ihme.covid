@@ -52,9 +52,15 @@ test_that(
       object = submit_job(script_path = script_path),
       regexp = "script_path is an empty string."
     )
+    
+    # script_path must be a valid filepath.
+    script_path = file.path("some_dir/we_should_never/make")
+    expect_error(
+      object = submit_job(script_path = script_path),
+      regexp = paste0("script_path is not a valid or found filepath. script_path: ", script_path)
+    )
   }
 )
-## script_path must be a valid filepath.
 
 # Command must be valid.
 ## script_path is in command.
