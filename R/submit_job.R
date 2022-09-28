@@ -15,7 +15,7 @@
 #' @param account [character] Account to attribute job to. Argument for `sbatch -A`.
 #' @param sbatch_args_list [list()] Optional named list of arguments to pass to `sbatch`, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' @param script_args_list [list()] Optional named list of arguments to pass to the script, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
-#' @param error_path [character] Optional filepath to slurm error output. Will send errors and output to same log file. If NULL, will default to `file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")`. Argument for `sbatch -o`.
+#' @param output_path [character] Optional filepath to slurm error output. Will send errors and output to same log file. If NULL, will default to `file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")`. Argument for `sbatch -o`.
 #' @param image_path [character] Optional filepath to image. Argument for `sbatch -i`.
 #' @param shell_path [character] Optional filepath to image shell script. No associated flag for `sbatch`.
 #' 
@@ -32,7 +32,7 @@ submit_job <- function(
     account = "proj_covid",
     sbatch_args_list = NULL,
     script_args_list = NULL,
-    error_path = NULL,
+    output_path = NULL,
     image_path = NULL,
     shell_path = NULL
 ) {
@@ -44,8 +44,8 @@ submit_job <- function(
     job_name <- toupper(tmp[length(tmp) - 1])
   }
   
-  if (is.null(error_path)) {
-    error_path = file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")
+  if (is.null(output_path)) {
+    output_path = file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")
   }
   
   if (is.null(shell_path)) {
@@ -63,7 +63,7 @@ submit_job <- function(
     " -A ", account,
     # TODO: Only add if not NULL.
     # TODO: Allow users to pass -e and -o, so that output and errors can be separate if they wish.
-    " -o ", file.path(error_path, paste0(job_name, ".o%A_%a"))
+    " -o ", file.path(output_path, paste0(job_name, ".o%A_%a"))
   )
   
   for (arg_name in names(sbatch_args_list)) { # Append extra arguments for sbatch.
