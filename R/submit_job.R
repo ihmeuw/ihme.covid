@@ -80,7 +80,7 @@ submit_job <- function(
     ifelse(
       is.null(error_path),
       "",
-      paste0(" -e ", file.path(output_path, paste0(job_name, ".e%A_%a")))
+      paste0(" -e ", file.path(error_path, paste0(job_name, ".e%A_%a")))
     )
   )
   for (arg_name in names(sbatch_args_list)) {
