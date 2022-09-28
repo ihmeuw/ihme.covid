@@ -34,6 +34,7 @@ submit_job <- function(
     sbatch_args_list = NULL,
     script_args_list = NULL,
     output_path = NULL,
+    error_path = NULL,
     image_path = NULL,
     shell_path = NULL
 ) {
