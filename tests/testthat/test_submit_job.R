@@ -73,9 +73,18 @@ test_that(
       object = submit_job(script_path = script_path, see_command = T),
       regexp = paste0("command: sbatch .*[.]sh .*-s ", script_path)
     )
+    ## script_path directly follows image_path when it is passed.
+    image_path = "/ihme/singularity-images/rstudio/ihme_rstudio_3631.img"
+    expect_message(
+      object = submit_job(
+        script_path = script_path,
+        image_path = image_path,
+        see_command = T
+      ),
+      regexp = paste0("command: sbatch .* -i ", image_path, " -s ", script_path)
+    )
     
     # image_path directly follows shell script when passed.
-    image_path = "/ihme/singularity-images/rstudio/ihme_rstudio_3631.img"
     expect_message(
       object = submit_job(
         script_path = script_path,
