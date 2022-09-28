@@ -1,5 +1,5 @@
 # TODO: write docstring
-.submit_job <- function(
+submit_job <- function(
     script_path, # full path to the script
     job_name = NULL, # Will be name of script if NULL.
     mem = "10G", # memory
