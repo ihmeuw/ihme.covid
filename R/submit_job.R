@@ -21,6 +21,7 @@
 #' @param image_path [character] Optional filepath to image. Argument for `shell_path -i`.
 #' @param shell_args_list [list()] Optional named list of arguments to pass to the shell, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' @param script_args_list [list()] Optional named list of arguments to pass to the script, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
+#' @param see_command [logical()] Optionally print command to output before submitting.
 #' 
 #' @return [character] `submission_return`, the return message from submitting `sbatch` `command` to `system(command, intern = T)`.
 #' 
@@ -39,7 +40,8 @@ submit_job <- function(
     shell_path = "/ihme/singularity-images/rstudio/shells/jpy_rstudio_sbatch_script.sh",
     image_path = NULL,
     shell_args_list = NULL,
-    script_args_list = NULL
+    script_args_list = NULL,
+    see_command = F
 ) {
   
   # Validate input.
@@ -100,6 +102,7 @@ submit_job <- function(
   
   
   # Submit job.
+  if (see_command) {message("command: ", command)}
   submission_return <- system(command, intern = T)
   message(paste("Cluster job submitted:", job_name, "; Submission return code:", submission_return))
   
