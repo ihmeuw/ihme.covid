@@ -68,9 +68,21 @@ test_that(
   {
     # script_path is in the right place in command.
     script_path = file.path(test_scripts_dir, "test_script_1.R")
+    ## script_path is after a shell script with a -s flag.
     expect_message(
       object = submit_job(script_path = script_path, see_command = T),
       regexp = paste0("command: sbatch .*[.]sh .*-s ", script_path)
+    )
+    
+    # image_path directly follows shell script when passed.
+    image_path = "/ihme/singularity-images/rstudio/ihme_rstudio_3631.img"
+    expect_message(
+      object = submit_job(
+        script_path = script_path,
+        image_path = image_path,
+        see_command = T
+      ),
+      regexp = paste0("command: sbatch .*[.]sh -i ", image_path)
     )
   }
 )
