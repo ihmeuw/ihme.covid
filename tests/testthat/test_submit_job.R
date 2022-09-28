@@ -63,7 +63,17 @@ test_that(
 )
 
 # Command must be valid.
-## script_path is in command.
+test_that(
+  desc = "Command must be valid.",
+  {
+    # script_path is in the right place in command.
+    script_path = file.path(test_scripts_dir, "test_script_1.R")
+    expect_message(
+      object = submit_job(script_path = script_path, see_command = T),
+      regexp = paste0("command: sbatch .*[.]sh .*-s ", script_path)
+    )
+  }
+)
 ## job_name is in command (set and passed).
 ## mem is in command.
 ## archive is in command.
