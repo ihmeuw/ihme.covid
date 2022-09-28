@@ -13,7 +13,8 @@
 #' @param runtime [character] Minutes of runtime to allow. Argument for `sbatch -t`.
 #' @param partition [character] Partition to run on. Argument for `sbatch -p`.
 #' @param account [character] Account to attribute job to. Argument for `sbatch -A`.
-#' @param args_list [list()] Optional named list of arguments to pass (to the script or to sbatch), e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
+#' @param sbatch_args_list [list()] Optional named list of arguments to pass to `sbatch`, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
+#' @param args_list [list()] Optional named list of arguments to pass to the script, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' @param error_path [character] Optional filepath to slurm error output. Will send errors and output to same log file. If NULL, will default to `file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")`. Argument for `sbatch -o`.
 #' @param image_path [character] Optional filepath to image. Argument for `sbatch -i`.
 #' @param shell_path [character] Optional filepath to image shell script. No associated flag for `sbatch`.
@@ -29,6 +30,7 @@ submit_job <- function(
     runtime = "20",
     partition = "d.q",
     account = "proj_covid",
+    sbatch_args_list = NULL,
     args_list = NULL,
     error_path = NULL,
     image_path = NULL,
@@ -61,7 +63,15 @@ submit_job <- function(
     " -A ", account,
     # TODO: Only add if not NULL.
     # TODO: Allow users to pass -e and -o, so that output and errors can be separate if they wish.
-    " -o ", file.path(error_path, paste0(job_name, ".o%A_%a")),
+    " -o ", file.path(error_path, paste0(job_name, ".o%A_%a"))
+  )
+  
+  for (arg_name in names(sbatch_args_list)) { # append extra arguments for sbatch
+    command <- paste(command, arg_name, args_list[arg_name])
+  }
+  
+  command <- paste0(
+    command,
     # TODO: Only add if not NULL.
     # TODO: Does image require shell argument.
     " ", shell_path,
