@@ -66,8 +66,8 @@ submit_job <- function(
     " -o ", file.path(error_path, paste0(job_name, ".o%A_%a"))
   )
   
-  for (arg_name in names(sbatch_args_list)) { # append extra arguments for sbatch
-    command <- paste(command, arg_name, args_list[arg_name])
+  for (arg_name in names(sbatch_args_list)) { # Append extra arguments for sbatch.
+    command <- paste(command, arg_name, sbatch_args_list[arg_name])
   }
   
   command <- paste0(
@@ -82,7 +82,7 @@ submit_job <- function(
     command <- paste0(command, " -i ", image_path)
   }
   
-  for (arg_name in names(args_list)) { # append extra arguments
+  for (arg_name in names(args_list)) { # Append extra arguments for script.
     command <- paste(command, arg_name, args_list[arg_name])
   }
   
