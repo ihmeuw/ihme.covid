@@ -76,9 +76,8 @@ submit_job <- function(
   
   command <- paste0(
     command,
-    # TODO: Only add if not NULL.
     # TODO: Does image require shell argument.
-    " ", shell_path,
+    ifelse(is.null(shell_path), "", paste0(" ", shell_path)),
     " -s ", script_path
   )
   
