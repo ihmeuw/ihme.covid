@@ -78,12 +78,9 @@ submit_job <- function(
     command,
     # TODO: Does image require shell argument.
     ifelse(is.null(shell_path), "", paste0(" ", shell_path)),
-    " -s ", script_path
+    " -s ", script_path,
+    ifelse(is.null(image_path), "", paste0(command, " -i ", image_path))
   )
-  
-  if (!is.null(image_path)) {
-    command <- paste0(command, " -i ", image_path)
-  }
   
   for (arg_name in names(script_args_list)) { # Append extra arguments for script.
     command <- paste(command, arg_name, script_args_list[arg_name])
