@@ -15,7 +15,8 @@
 #' @param account [character] Account to attribute job to. Argument for `sbatch -A`.
 #' @param sbatch_args_list [list()] Optional named list of arguments to pass to `sbatch`, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' @param script_args_list [list()] Optional named list of arguments to pass to the script, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
-#' @param output_path [character] Optional filepath to slurm error output. Will send errors and output to same log file. If NULL, will default to `file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")`. Argument for `sbatch -o`.
+#' @param output_path [character] Optional filepath to slurm output. If NULL, will default to `file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")`. Will send errors and output to same log file if error_path is NULL. Argument for `sbatch -o`.
+#' #' @param error_path [character] Optional filepath to slurm error output. Will send errors and output to same log file. If NULL, will send errors to same log file as output. Argument for `sbatch -e`.
 #' @param image_path [character] Optional filepath to image. Argument for `sbatch -i`.
 #' @param shell_path [character] Optional filepath to image shell script. No associated flag for `sbatch`.
 #' 
@@ -61,9 +62,12 @@ submit_job <- function(
     " -t ", runtime,
     " -p ", partition,
     " -A ", account,
-    # TODO: Only add if not NULL.
-    # TODO: Allow users to pass -e and -o, so that output and errors can be separate if they wish.
-    " -o ", file.path(output_path, paste0(job_name, ".o%A_%a"))
+    " -o ", file.path(output_path, paste0(job_name, ".o%A_%a")),
+    ifelse(
+      is.null(error_path),
+      "",
+      paste0(" -e ", file.path(output_path, paste0(job_name, ".e%A_%a")))
+    )
   )
   
   for (arg_name in names(sbatch_args_list)) { # Append extra arguments for sbatch.
