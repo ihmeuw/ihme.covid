@@ -82,6 +82,8 @@ test_that(
     shell_args_list = list("--test_shell_arg" = "test_shell_arg")
     script_args_list = list("--test_script_arg" = "test_script_arg")
     ## sbatch args follow sbatch and precede shell_path.
+    ## shell args follow shall_path and precede script_path.
+    ## script args follow script_path.
     expect_message(
       object = submit_job(
         script_path = script_path,
@@ -113,49 +115,38 @@ test_that(
         " ", names(script_args_list)[1], " ", script_args_list[[names(script_args_list)[1]]]
       )
     )
-    ## shell args follow shall_path and precede script_path.
-    ## script args follow script_path.
     
-    # script_path is in the right place in command.
-    ## script_path is after a shell script with a -s flag.
-    expect_message(
-      object = submit_job(script_path = script1, see_command = T),
-      regexp = paste0("command: sbatch .*[.]sh .*-s ", script1)
-    )
-    ## script_path directly follows image_path when it is passed.
-    image_path = "/ihme/singularity-images/rstudio/ihme_rstudio_3631.img"
-    expect_message(
-      object = submit_job(
-        script_path = script1,
-        image_path = image_path,
-        see_command = T
-      ),
-      regexp = paste0("command: sbatch .* -i ", image_path, " -s ", script1)
-    )
-    
-    # image_path directly follows shell script when passed.
-    expect_message(
-      object = submit_job(
-        script_path = script1,
-        image_path = image_path,
-        see_command = T
-      ),
-      regexp = paste0("command: sbatch .*[.]sh -i ", image_path)
-    )
+    # # script_path is in the right place in command.
+    # ## script_path is after a shell script with a -s flag.
+    # expect_message(
+    #   object = submit_job(script_path = script1, see_command = T),
+    #   regexp = paste0("command: sbatch .*[.]sh .*-s ", script1)
+    # )
+    # ## script_path directly follows image_path when it is passed.
+    # image_path = "/ihme/singularity-images/rstudio/ihme_rstudio_3631.img"
+    # expect_message(
+    #   object = submit_job(
+    #     script_path = script1,
+    #     image_path = image_path,
+    #     see_command = T
+    #   ),
+    #   regexp = paste0("command: sbatch .* -i ", image_path, " -s ", script1)
+    # )
+    # 
+    # # image_path directly follows shell script when passed.
+    # expect_message(
+    #   object = submit_job(
+    #     script_path = script1,
+    #     image_path = image_path,
+    #     see_command = T
+    #   ),
+    #   regexp = paste0("command: sbatch .*[.]sh -i ", image_path)
+    # )
   }
 )
 
-## job_name is in command (set and passed).
-## mem is in command.
-## archive is in command.
-## cores is in command.
-## runtime is in command.
-## partition is in command.
-## account is in command.
-## output_path is in command.
-## error_path is in command when passed.
-## sbatch args are in command when passed.
-## shell_path is in command.
-## shell args are in command when passed.
-## script args are in command when passed.
-## command output when see_command set to true.
+## Required arguments are in command, especially when left out of function call.
+## error_path is not in command when not passed.
+## sbatch args are not in command when not passed.
+## shell args are not in command when not passed.
+## script args are not in command when not passed.
