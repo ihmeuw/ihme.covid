@@ -95,6 +95,9 @@ test_that(
     )
   }
 )
+## sbatch args follow sbatch and precede shell_path.
+## shell args follow shall_path and precede script_path.
+## script args follow script_path.
 ## job_name is in command (set and passed).
 ## mem is in command.
 ## archive is in command.
@@ -106,7 +109,6 @@ test_that(
 ## error_path is in command when passed.
 ## sbatch args are in command when passed.
 ## shell_path is in command.
-## image_path is in command when passed.
 ## shell args are in command when passed.
 ## script args are in command when passed.
 ## command output when see_command set to true.
