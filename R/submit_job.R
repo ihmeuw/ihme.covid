@@ -43,6 +43,7 @@ submit_job <- function(
   
   # TODO: Validate input.
   
+  # Set defaults.
   if (is.null(job_name)) {
     tmp <- unlist(strsplit(script_path, "[/.]"))
     job_name <- toupper(tmp[length(tmp) - 1])
@@ -52,6 +53,9 @@ submit_job <- function(
     output_path = file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")
   }
   
+  
+  # Construct command.
+  ## Set up sbatch with flags.
   command <- paste0(
     "sbatch",
     " -J ", job_name,
@@ -68,32 +72,29 @@ submit_job <- function(
       paste0(" -e ", file.path(output_path, paste0(job_name, ".e%A_%a")))
     )
   )
-  
-  # Append extra arguments for sbatch.
   for (arg_name in names(sbatch_args_list)) {
     command <- paste(command, arg_name, sbatch_args_list[arg_name])
   }
-  
+  ## Set up shell script and image with flags.
   command <- paste0(
     command,
     shell_path,
     ifelse(is.null(image_path), "", paste0(command, " -i ", image_path))
   )
-  
-  # Append extra arguments for shell script.
   for (arg_name in names(shell_args_list)) {
     command <- paste(command, arg_name, shell_args_list[arg_name])
   }
-  
+  ## Set up job script with flags.
   command = paste0(command, " -s ", script_path)
-  
-  # Append extra arguments for script.
   for (arg_name in names(script_args_list)) {
     command <- paste(command, arg_name, script_args_list[arg_name])
   }
   
+  
+  # Submit job.
   submission_return <- system(command, intern = T)
   message(paste("Cluster job submitted:", job_name, "; Submission return code:", submission_return))
+  
   
   return(submission_return)
 }
