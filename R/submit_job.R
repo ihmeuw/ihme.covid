@@ -17,7 +17,7 @@
 #' @param output_path [character] Optional filepath to slurm output. If NULL, will default to `file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")`. Will send errors and output to same log file if error_path is NULL. Argument for `sbatch -o`.
 #' @param error_path [character] Optional filepath to slurm error output. If NULL, will send errors to same log file as output. Argument for `sbatch -e`.
 #' @param sbatch_args_list [list()] Optional named list of arguments to pass to `sbatch`, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
-#' @param shell_path [character] Optional filepath to image shell script. If NULL, defaults to `/ihme/singularity-images/rstudio/shells/jpy_rstudio_sbatch_script.sh`.
+#' @param shell_path [character] Optional filepath to image shell script.
 #' @param image_path [character] Optional filepath to image. Argument for `shell_path -i`.
 #' @param shell_args_list [list()] Optional named list of arguments to pass to the shell, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' @param script_args_list [list()] Optional named list of arguments to pass to the script, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
@@ -37,7 +37,7 @@ submit_job <- function(
     output_path = NULL,
     error_path = NULL,
     sbatch_args_list = NULL,
-    shell_path = "/ihme/singularity-images/rstudio/shells/jpy_rstudio_sbatch_script.sh",
+    shell_path = "/ihme/singularity-images/rstudio/shells/execRscript.sh",
     image_path = NULL,
     shell_args_list = NULL,
     script_args_list = NULL,
