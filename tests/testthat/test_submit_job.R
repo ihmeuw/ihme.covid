@@ -22,6 +22,19 @@ test_that(
 # Return must be valid.
 ## Return type must be character.
 ## Return must be "Submitted batch job <job id>".
+test_that(
+  desc = "Return must be 'Submitted batch job <job id>'.",
+  {
+    result = submit_job(script_path = script_path)
+    expect(
+      ok = grepl(return_regex, result),
+      failure_message = paste0(
+        "Passing only script_path ", script_path,
+        " produced invalid submission return: ", result
+      )
+    )
+  }
+)
 ## A valid test script must return a job id.
 
 # Inputs must be valid.
