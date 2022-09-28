@@ -1,4 +1,4 @@
-# TODO: Build test bench.
+
 # TODO: Find best way to document defaults.
 # TODO: How to explicitly allow multiple argument data types? Does R overload? How to document in Roxygen? (E.g., cores can be submitted as integer or character, and we can just convert to character when constructing command.)
 
@@ -22,9 +22,9 @@
 #' @param shell_args_list [list()] Optional named list of arguments to pass to the shell, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' @param script_args_list [list()] Optional named list of arguments to pass to the script, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' @param see_command [logical()] Optionally print command to output before submitting.
-#' 
+#'
 #' @return [character] `submission_return`, the return message from submitting `sbatch` `command` to `system(command, intern = T)`.
-#' 
+#'
 submit_job <- function(
     script_path,
     job_name = NULL,
@@ -41,9 +41,9 @@ submit_job <- function(
     image_path = NULL,
     shell_args_list = NULL,
     script_args_list = NULL,
-    see_command = F
+    see_command = F    
 ) {
-  
+
   # Validate input.
   if (!is.character(script_path)) {
     stop("script_path must be a string. script_path: ", script_path)
@@ -52,18 +52,19 @@ submit_job <- function(
   } else if (!file.exists(script_path)) {
     stop("script_path is not a valid or found filepath. script_path: ", script_path)
   } # TODO: How to check that it is a file not a directory?
-  
+  # TODO: Other validations.
+
   # Set defaults.
   if (is.null(job_name)) {
     tmp <- unlist(strsplit(script_path, "[/.]"))
     job_name <- toupper(tmp[length(tmp) - 1])
   }
-  
+
   if (is.null(output_path)) {
-    output_path = file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")
+    output_path <- file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")
   }
-  
-  
+
+
   # Construct command.
   ## Set up sbatch with flags.
   command <- paste0(
@@ -95,17 +96,19 @@ submit_job <- function(
     command <- paste(command, arg_name, shell_args_list[arg_name])
   }
   ## Set up job script with flags.
-  command = paste0(command, " -s ", script_path)
+  command <- paste0(command, " -s ", script_path)
   for (arg_name in names(script_args_list)) {
     command <- paste(command, arg_name, script_args_list[arg_name])
   }
-  
-  
+
+
   # Submit job.
-  if (see_command) {message("command: ", command)}
+  if (see_command) {
+    message("command: ", command)
+  }
   submission_return <- system(command, intern = T)
   message(paste("Cluster job submitted:", job_name, "; Submission return code:", submission_return))
-  
-  
+
+
   return(submission_return)
 }

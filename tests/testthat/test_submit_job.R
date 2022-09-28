@@ -1,14 +1,14 @@
 
 # NOTE: Set your working directory to the repo.
-test_scripts_dir = "tests/testthat/fixtures/sbatch_scripts"
-script1 = script_path = file.path(test_scripts_dir, "test_script_1.R")
-return_regex = "Submitted batch job \\d{8}"
+test_scripts_dir <- "tests/testthat/fixtures/sbatch_scripts"
+script1 <- script_path <- file.path(test_scripts_dir, "test_script_1.R")
+return_regex <- "Submitted batch job \\d{8}"
 
 # Must run with just a valid script path.
 test_that(
   desc = "Must run with just a valid script path.",
   {
-    result = submit_job(script_path = script1)
+    result <- submit_job(script_path = script1)
     expect(
       ok = grepl(return_regex, result),
       failure_message = paste0(
@@ -23,7 +23,7 @@ test_that(
 test_that(
   desc = "Return must be 'Submitted batch job <job id>'.",
   {
-    result = submit_job(script_path = script1)
+    result <- submit_job(script_path = script1)
     expect(
       ok = grepl(return_regex, result),
       failure_message = paste0(
@@ -40,20 +40,20 @@ test_that(
   desc = "script_path must be valid.",
   {
     # script_path must be a string.
-    script_path = 10
+    script_path <- 10
     expect_error(
       object = submit_job(script_path = script_path),
       regexp = paste0("script_path must be a string. script_path: ", script_path)
     )
-    
+
     # script_path must be a non-empty string.
     expect_error(
       object = submit_job(script_path = ""),
       regexp = "script_path is an empty string."
     )
-    
+
     # script_path must be a valid filepath.
-    script_path = file.path("some_dir/we_should_never/make")
+    script_path <- file.path("some_dir/we_should_never/make")
     expect_error(
       object = submit_job(script_path = script_path),
       regexp = paste0("script_path is not a valid or found filepath. script_path: ", script_path)
@@ -66,24 +66,25 @@ test_that(
   desc = "Command must be valid.",
   {
     # Arguments are grouped with the commands/scripts to which they belong.
-    script_path = script1
-    job_name = "test_job"
-    mem = "1G"
-    archive = T
-    cores = "2"
-    runtime = "1"
-    partition = "d.q"
-    account = "proj_covid"
-    output_path = "test_output_path"
-    error_path = output_path
-    sbatch_args_list = list("--test_sbatch_arg" = "test_sbatch_arg")
-    shell_path = "test_shell_path"
-    image_path = "test_image_path"
-    shell_args_list = list("--test_shell_arg" = "test_shell_arg")
-    script_args_list = list("--test_script_arg" = "test_script_arg")
     ## sbatch args follow sbatch and precede shell_path.
     ## shell args follow shall_path and precede script_path.
     ## script args follow script_path.
+    script_path <- script1
+    job_name <- "test_job"
+    mem <- "1G"
+    archive <- T
+    cores <- "2"
+    runtime <- "1"
+    partition <- "d.q"
+    account <- "proj_covid"
+    output_path <- "test_output_path"
+    error_path <- output_path
+    sbatch_args_list <- list("--test_sbatch_arg" = "test_sbatch_arg")
+    shell_path <- "test_shell_path"
+    image_path <- "test_image_path"
+    shell_args_list <- list("--test_shell_arg" = "test_shell_arg")
+    script_args_list <- list("--test_script_arg" = "test_script_arg")
+
     expect_message(
       object = submit_job(
         script_path = script_path,
@@ -115,7 +116,7 @@ test_that(
         " ", names(script_args_list)[1], " ", script_args_list[[names(script_args_list)[1]]]
       )
     )
-    
+
     # # script_path is in the right place in command.
     # ## script_path is after a shell script with a -s flag.
     # expect_message(
@@ -132,7 +133,7 @@ test_that(
     #   ),
     #   regexp = paste0("command: sbatch .* -i ", image_path, " -s ", script1)
     # )
-    # 
+    #
     # # image_path directly follows shell script when passed.
     # expect_message(
     #   object = submit_job(
