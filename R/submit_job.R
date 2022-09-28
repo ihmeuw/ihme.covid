@@ -70,7 +70,7 @@ submit_job <- function(
     "sbatch",
     " -J ", job_name,
     " --mem=", mem,
-    ifelse(archive, " -C archive", ""),
+    ifelse(archive, " -C archive", ""), # TODO: Allow this constraint flag to receive other arguments?
     " -c ", cores,
     " -t ", runtime,
     " -p ", partition,
