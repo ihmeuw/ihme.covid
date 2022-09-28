@@ -1,3 +1,4 @@
+# TODO: Build test bench.
 # TODO: Find best way to document defaults.
 # TODO: How to explicitly allow multiple argument data types? Does R overload? How to document in Roxygen? (E.g., cores can be submitted as integer or character, and we can just convert to character when constructing command.)
 
@@ -41,7 +42,14 @@ submit_job <- function(
     script_args_list = NULL
 ) {
   
-  # TODO: Validate input.
+  # Validate input.
+  if (!is.character(script_path)) {
+    stop("script_path must be a string. script_path: ", script_path)
+  } else if (script_path == "") {
+    stop("script_path is an empty string.")
+  } else if (!file.exists(script_path)) {
+    stop("script_path is not a valid or found filepath. script_path: ", script_path)
+  } # TODO: How to check that it is a file not a directory?
   
   # Set defaults.
   if (is.null(job_name)) {
