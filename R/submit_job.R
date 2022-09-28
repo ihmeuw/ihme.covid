@@ -5,7 +5,7 @@
 #'
 #' \code{submit_job()} Runs a script with sbatch, accepting standard sbatch arguments in addition to an optional list of arguments to pass to the script.
 #'
-#' @param script_path [character] Full path to the script. Argument for `sbatch -s`.
+#' @param script_path [character] Path to the script to launch. Argument for `sbatch -s`.
 #' @param job_name [character] Optional name to give job. Will be name of script if NULL.
 #' @param mem [character] Memory to allocate. Should be valid argument format for `sbatch --mem`.
 #' @param archive [logical] To allow access to archive. Argument for `sbatch -C`.
