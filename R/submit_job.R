@@ -13,12 +13,12 @@
 #' @param runtime [character] Minutes of runtime to allow. Argument for `sbatch -t`.
 #' @param partition [character] Partition to run on. Argument for `sbatch -p`.
 #' @param account [character] Account to attribute job to. Argument for `sbatch -A`.
-#' @param sbatch_args_list [list()] Optional named list of arguments to pass to `sbatch`, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
-#' @param script_args_list [list()] Optional named list of arguments to pass to the script, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
-#' @param output_path [character] Optional filepath to slurm output. If NULL, will default to `file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")`. Will send errors and output to same log file if error_path is NULL. Argument for `sbatch -o`.
+#' #' @param output_path [character] Optional filepath to slurm output. If NULL, will default to `file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")`. Will send errors and output to same log file if error_path is NULL. Argument for `sbatch -o`.
 #' #' @param error_path [character] Optional filepath to slurm error output. Will send errors and output to same log file. If NULL, will send errors to same log file as output. Argument for `sbatch -e`.
-#' @param image_path [character] Optional filepath to image. Argument for `sbatch -i`.
+#' @param sbatch_args_list [list()] Optional named list of arguments to pass to `sbatch`, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' @param shell_path [character] Optional filepath to image shell script. If NULL, defaults to `/ihme/singularity-images/rstudio/shells/jpy_rstudio_sbatch_script.sh`.
+#' @param image_path [character] Optional filepath to image. Argument for `sbatch -i`.
+#' @param script_args_list [list()] Optional named list of arguments to pass to the script, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' 
 #' @return [character] `submission_return`, the return message from submitting `sbatch` `command` to `system(command, intern = T)`.
 #' 
@@ -31,12 +31,12 @@ submit_job <- function(
     runtime = "20",
     partition = "d.q",
     account = "proj_covid",
-    sbatch_args_list = NULL,
-    script_args_list = NULL,
     output_path = NULL,
     error_path = NULL,
+    sbatch_args_list = NULL,
+    shell_path = NULL,
     image_path = NULL,
-    shell_path = NULL
+    script_args_list = NULL
 ) {
   
   # TODO: Validate input.
