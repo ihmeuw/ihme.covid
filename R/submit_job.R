@@ -14,7 +14,7 @@
 #' @param partition [character] Partition to run on. Argument for `sbatch -p`.
 #' @param account [character] Account to attribute job to.
 #' @param args_list [list()] Optional named list of arguments to pass to script, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
-#' @param error_path [character] Optional filepath to slurm error output. If not NULL, will send errors and output to same log file. Argument for `sbatch -o`.
+#' @param error_path [character] Optional filepath to slurm error output. Will send errors and output to same log file. If NULL, will default to `file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")`. Argument for `sbatch -o`.
 #' @param image_path [character] Optional filepath to image. Argument for `sbatch -i`.
 #' @param shell_path [character] Optional filepath to image shell script. No associated flag for `sbatch`.
 #' 
