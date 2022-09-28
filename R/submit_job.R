@@ -12,7 +12,7 @@
 #' @param cores [character] Cores to allocate. Argument for `sbatch -c`.
 #' @param runtime [character] Minutes of runtime to allow. Argument for `sbatch -t`.
 #' @param partition [character] Partition to run on. Argument for `sbatch -p`.
-#' @param account [character] Account to attribute job to.
+#' @param account [character] Account to attribute job to. Argument for `sbatch -A`.
 #' @param args_list [list()] Optional named list of arguments to pass to script, e.g. `list("--arg1" = arg1, "--arg2" = arg2)`.
 #' @param error_path [character] Optional filepath to slurm error output. Will send errors and output to same log file. If NULL, will default to `file.path("/mnt/share/temp/slurmoutput", Sys.info()["user"], "errors")`. Argument for `sbatch -o`.
 #' @param image_path [character] Optional filepath to image. Argument for `sbatch -i`.
