@@ -89,7 +89,7 @@ submit_job <- function(
   command <- paste0(
     command,
     " ", shell_path,
-    ifelse(is.null(image_path), "", paste0(command, " -i ", image_path))
+    ifelse(is.null(image_path), "", paste0(" -i ", image_path))
   )
   for (arg_name in names(shell_args_list)) {
     command <- paste(command, arg_name, shell_args_list[arg_name])
