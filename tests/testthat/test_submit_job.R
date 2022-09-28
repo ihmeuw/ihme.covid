@@ -4,10 +4,10 @@ test_scripts_dir = "tests/testthat/fixtures/sbatch_scripts"
 return_regex = "Submitted batch job \\d{8}"
 
 # Must run with just a valid script path.
-script_path = file.path(test_scripts_dir, "test_script_1.R")
 test_that(
   desc = "Must run with just a valid script path.",
   {
+    script_path = file.path(test_scripts_dir, "test_script_1.R")
     result = submit_job(script_path = script_path)
     expect(
       ok = grepl(return_regex, result),
@@ -23,6 +23,7 @@ test_that(
 test_that(
   desc = "Return must be 'Submitted batch job <job id>'.",
   {
+    script_path = file.path(test_scripts_dir, "test_script_1.R")
     result = submit_job(script_path = script_path)
     expect(
       ok = grepl(return_regex, result),
@@ -47,9 +48,8 @@ test_that(
     )
     
     # script_path must be a non-empty string.
-    script_path = ""
     expect_error(
-      object = submit_job(script_path = script_path),
+      object = submit_job(script_path = ""),
       regexp = "script_path is an empty string."
     )
     
