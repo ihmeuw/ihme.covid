@@ -20,7 +20,6 @@ test_that(
 )
 
 # Return must be valid.
-## Return type must be character.
 ## Return must be "Submitted batch job <job id>".
 test_that(
   desc = "Return must be 'Submitted batch job <job id>'.",
