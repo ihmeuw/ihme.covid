@@ -86,23 +86,28 @@ test_that(
     script_args_list <- list("--test_script_arg" = "test_script_arg")
 
     expect_message(
-      object = submit_job(
-        script_path = script_path,
-        job_name = job_name,
-        mem = mem,
-        archive = archive,
-        cores = cores,
-        runtime = runtime,
-        partition = partition,
-        account = account,
-        output_path = output_path,
-        error_path = output_path,
-        sbatch_args_list = sbatch_args_list,
-        shell_path = shell_path,
-        image_path = image_path,
-        shell_args_list = shell_args_list,
-        script_args_list = script_args_list,
-        see_command = T
+      object = tryCatch(
+        suppressWarnings(
+          submit_job(
+            script_path = script_path,
+            job_name = job_name,
+            mem = mem,
+            archive = archive,
+            cores = cores,
+            runtime = runtime,
+            partition = partition,
+            account = account,
+            output_path = output_path,
+            error_path = output_path,
+            sbatch_args_list = sbatch_args_list,
+            shell_path = shell_path,
+            image_path = image_path,
+            shell_args_list = shell_args_list,
+            script_args_list = script_args_list,
+            see_command = T
+          )
+        ),
+        error = function(e){return(NULL)}
       ),
       regexp = paste0(
         "command: sbatch -J ", job_name, " --mem=", mem, " -C archive -c ", cores,
