@@ -5,6 +5,7 @@ script1 <- script_path <- file.path(test_scripts_dir, "test_script_1.R")
 return_regex <- "Submitted batch job \\d{8}"
 
 # Must run with just a valid script path.
+# FIXME: Why is this test failing? Is it because the script path is relative to the repo root?
 test_that(
   desc = "Must run with just a valid script path.",
   {
