@@ -65,8 +65,8 @@ children_of_parents <- function(
 #' @description Helper function for children_of_parents. 
 validate_children_of_parents_inputs = function(parent_loc_ids, output, hierarchy){
   # Check for valid parent_locs_ids type
-  if (!is.vector(parent_loc_ids) | !is.integer(parent_loc_ids)) {
-    stop("Invalid parent_loc_ids type, please provide an integer vector of location_id's")
+  if (!is.vector(parent_loc_ids) | !is.numeric(parent_loc_ids)) {
+    stop("Invalid parent_loc_ids type, please provide a numeric vector of location_id's")
   }
   
   # check for valid method
