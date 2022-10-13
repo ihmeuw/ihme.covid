@@ -42,6 +42,7 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "devtools"))
+          install.packages(c("remotes", "shiny"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
       - name: Test
