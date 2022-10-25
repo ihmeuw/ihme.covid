@@ -58,6 +58,15 @@ test_that("children_of_parents throws expected errors", {
     ), regexp = "Invalid output argument, please choose"
   )
   
+  expect_error(
+    children_of_parents(
+      parent_loc_ids = c('1', '102'),
+      hierarchy = test_hier, 
+      output = 'not an output',
+      include_parent = FALSE
+    ), regexp = "Invalid parent_loc_ids type, please provide a numeric vector of location_id's"
+  )
+  
   bad_hier = data.table::copy(test_hier)
   bad_hier$path_to_top_parent = NULL
   expect_error(
